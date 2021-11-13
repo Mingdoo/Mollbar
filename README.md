@@ -2,6 +2,8 @@
 
 ---
 
+### 프로젝트명 : 몰봐(mollbar)
+
 ### Contributer :
 
 <table>
@@ -10,4 +12,3 @@
       <td align="center"><a href="https://github.com/by-gramm"><img src="https://avatars.githubusercontent.com/u/52533688?v=4" width="100px;" alt=""/><br /><sub><b>이정환</b></sub></a><br /></td>
 </tr>
 </table>
-
