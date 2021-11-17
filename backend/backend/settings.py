@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     # Local Apps
     'accounts',
     'movies',
+    'community',
 
     # Rest Framework
     'rest_framework',
