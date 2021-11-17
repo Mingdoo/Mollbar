@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import NotFound from '@/pages/NotFound';
 import Profile from '@/pages/Profile'
 import Login from '@/pages/Login';
+import MovieDetail from '@/pages/MovieDetail';
+
 
 Vue.use(VueRouter)
 
@@ -22,6 +24,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/detail',
+    name: 'MovieDetail',
+    component: MovieDetail
   },
   { path: "*", component: NotFound }
 ]
