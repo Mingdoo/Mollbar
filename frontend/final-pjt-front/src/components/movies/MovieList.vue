@@ -4,6 +4,7 @@
       v-for="trendingMovie in trendingMovieList"
       :key=trendingMovie.id
       :trending-movie="trendingMovie"
+      @movie-detail="movieDetail"
     >
     </movie-item>
   </div>
@@ -19,6 +20,12 @@ export default {
   },
   components: {
     MovieItem,
+  },
+  methods: {
+    movieDetail(event) {
+      console.log(event)
+      // this.$emit('movieDetail')
+    }
   }
 }
 </script>
