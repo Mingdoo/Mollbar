@@ -3,27 +3,40 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import NotFound from '@/pages/NotFound';
 import Profile from '@/pages/Profile'
-import Login from '@/pages/Login';
+import Login from '@/components/accounts/Login';
 import MovieDetail from '@/pages/MovieDetail';
-
+import SignUp from '@/components/accounts/SignUp';
 
 Vue.use(VueRouter)
 
 const routes = [
+  // home
   {
     path: '/',
     name: 'Home',
     component: Home
   },
+  // accounts
   {
     path: '/profile',
     name: 'Profile',
     component: Profile
   },
   {
+    path: '/signup',
+    name: 'Signup',
+    component: SignUp
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  // movies
+  {
+    path: '/detail',
+    name: 'MovieDetail',
+    component: MovieDetail
   },
   {
     path: '/detail',
