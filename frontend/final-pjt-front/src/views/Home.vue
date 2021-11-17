@@ -32,8 +32,23 @@ export default {
       }
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         this.trendingMovieList = res.data.results
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    
+    axios({
+      method: 'get',
+      url: 'https://api.themoviedb.org/3/genre/movie/list',
+      params: {
+        api_key: API_KEY,
+        language: 'ko-KR'
+      }
+    })
+      .then((res) => {
+        console.log(res)
       })
       .catch((err) => {
         console.log(err)
