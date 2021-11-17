@@ -22,6 +22,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Local Apps
     'accounts',
+    'movies',
 
     # Rest Framework
     'rest_framework',
