@@ -1,24 +1,27 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <movie-list :trending-movie-list="trendingMovieList"></movie-list>
+    <trending-movie-list
+    :trending-movie-list="trendingMovieList"
+    >
+    </trending-movie-list>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import MovieList from '@/components/movies/MovieList'
+import TrendingMovieList from '@/components/movies/TrendingMovieList'
 import axios from 'axios'
 const API_KEY = process.env.VUE_APP_API_KEY
 
 export default {
   name: 'Home',
   components: {
-    MovieList,
+    TrendingMovieList,
   },
   data: function() {
     return {
-      trendingMovieList: null,
+      trendingMovieList: null
     }
   },
   created: function() {
@@ -34,21 +37,7 @@ export default {
       .then((res) => {
         // console.log(res)
         this.trendingMovieList = res.data.results
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    
-    axios({
-      method: 'get',
-      url: 'https://api.themoviedb.org/3/genre/movie/list',
-      params: {
-        api_key: API_KEY,
-        language: 'ko-KR'
-      }
-    })
-      .then((res) => {
-        console.log(res)
+        this.$store.state.trendingMovieList = res.data.results
       })
       .catch((err) => {
         console.log(err)
