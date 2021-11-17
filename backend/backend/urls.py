@@ -22,8 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/accounts/', include('accounts.urls')),
-    path('api/v1/movies', include('movies.urls')),
-    path('api/v1/community', include('community.urls')),
+    path('api/v1/movies/', include('movies.urls')),
+    path('api/v1/community/', include('community.urls')),
     
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
