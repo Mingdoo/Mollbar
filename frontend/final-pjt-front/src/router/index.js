@@ -6,6 +6,7 @@ import Profile from '@/pages/Profile'
 import Login from '@/components/accounts/Login';
 import MovieDetail from '@/pages/MovieDetail';
 import SignUp from '@/components/accounts/SignUp';
+import CommunityHome from '@/pages/CommunityHome'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
     path: '/detail',
     name: 'MovieDetail',
     component: MovieDetail
+  },
+  {
+    path: '/community/',
+    name: 'CommunityHome',
+    component: CommunityHome
   },
   { path: "*", component: NotFound }
 ]

@@ -3,7 +3,7 @@
     <label for="usrname">아이디</label>
     <input 
       type="text" id="usrname" name="usrname" 
-      required v-model="credentials.id"
+      required v-model="credentials.username"
       class="mb-3"
     >
 
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       credentials: {},
-      loginUrl: BASE_URL + 'api-auth/login/'
+      loginUrl: BASE_URL + 'api/v1/accounts/token/'
     }
   },
   methods: {
@@ -38,8 +38,9 @@ export default {
         data: this.credentials,
       })
         .then((res) => {
-          localStorage.setItem('jwt', res.data.token)
-          this.$router.push({name: "/"})
+          localStorage.setItem('jwt', res.data.access)
+          this.$store.dispatch('changeLogged')
+          this.$router.push({name: "Home"})
         })
         .catch((err)=> {
           console.log(err)
