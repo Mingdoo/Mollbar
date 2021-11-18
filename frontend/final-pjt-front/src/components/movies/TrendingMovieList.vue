@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       scrollAmount: 0,
-      scrollPerclick: 200
+      scrollPerclick: 400
     }
   },
   components: {
@@ -48,7 +48,7 @@ export default {
       if (this.scrollAmount <= sliders.scrollWidth - sliders.clientWidth){
         $('.carousel').animate({
           scrollLeft: (this.scrollAmount += this.scrollPerclick)
-          }, 200);
+          }, 400);
         }
     },
   }
@@ -57,7 +57,7 @@ export default {
 
 <style>
 .carousel {
-  height: 220px;
+  height: 250px;
   width: 85%;
   overflow-y: scroll;
   white-space: nowrap;
