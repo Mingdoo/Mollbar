@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Genre(models.Model):
@@ -24,3 +25,15 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Review(models.Model):
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    content = models.CharField(max_length=500)
+
+    class Meta:
+        ordering = ['-pk']
+    
+    def __str__(self):
+        return f'{self.movie} ({self.reviewer})'

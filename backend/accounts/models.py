@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.conf import settings
 from django.core.validators import (
     MinValueValidator, MaxValueValidator
 )
@@ -12,7 +12,7 @@ class User(AbstractUser):
 
 
 class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user_movie_rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
 
