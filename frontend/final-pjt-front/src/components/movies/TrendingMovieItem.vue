@@ -44,13 +44,13 @@ export default {
   align-items: center;
 }
 .carouselbox img {
-  height: 100%;
+  height: 75%;
   background-size: cover;
-  margin: 0px 10px;
+  margin: 0px 20px;
   cursor: pointer;
   transition: 0.5s ease;
   z-index: 2;
-  margin-top: 3%;
+  margin-top: 6%;
 }
 .carouselbox img:hover {
   transform: scale(1.3);
