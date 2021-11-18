@@ -17,7 +17,23 @@ export default {
   components: {
     NavBar,
     FooTer,
-  }
+  },
+  data() {
+    return {
+    }
+  },
+  // created() {
+  //   const token = localStorage.getItem('jwt')
+  //   if (token) {
+  //     thi
+  //   }
+  // },
+  // updated() {
+  //   const token = localStorage.getItem('jwt')
+  //   if (token) {
+  //     this.isLogin = true
+  //   }
+  // }
 }
 </script>
 
@@ -28,6 +44,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: darkslategray;
 }
 
 #nav {
