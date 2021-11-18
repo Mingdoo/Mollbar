@@ -7,7 +7,7 @@ import re
 from .serializers import SignupSerializer
 
 
-LOWERCASE_AND_NUMBER = re.compile('^(?=.*[a-z])(?=.*\d)[a-z\d]')
+LOWERCASE_AND_NUMBER = re.compile('^([a-z0-9])')
 LOWERCASE_AND_UPPERCASE_AND_NUMBER = re.compile('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]')
 
 @api_view(['POST'])
