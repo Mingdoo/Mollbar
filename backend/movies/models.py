@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import (
+    MinValueValidator, MaxValueValidator
+)
 
 
 class Genre(models.Model):
@@ -37,3 +40,12 @@ class Review(models.Model):
     
     def __str__(self):
         return f'{self.movie} ({self.reviewer})'
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
+
+    def __str__(self):
+        return self.rate

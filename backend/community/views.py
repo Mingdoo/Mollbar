@@ -1,6 +1,6 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
-from .serializers import ArticleSerializer
-from .models import Article
+from .serializers import ArticleSerializer, CommentSerializer
+from .models import Article, Comment
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -62,5 +62,51 @@ def article_detail(request, article_id):
         article.detele()
         return Response(
             {'message': '게시글이 삭제되었습니다.'},
+            status=status.HTTP_204_NO_CONTENT
+        )
+
+
+@api_view(['GET', 'POST'])
+def comment_list(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+
+    # 게시글의 댓글 목록 보기 (READ)
+    if request.method == 'GET':
+        comments = article.comment_set.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    # 게시글에 새 댓글 작성하기 (CREATE)
+    else:
+        serializer = CommentSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(article=article, comment_user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['PUT', 'DELETE'])
+def comment_update_or_delete(request, article_id, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if request.user != comment.comment_user:
+        return Response(
+            {'message': '댓글은 작성자만 수정/삭제할 수 있습니다.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    # 댓글 수정하기 (UPDATE)
+    if request.method == 'PUT':
+        serializer = CommentSerializer(comment, data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # 댓글 삭제하기 (DELETE)
+    else:
+        comment.delete()
+        return Response(
+            {'message': '댓글이 삭제되었습니다.'},
             status=status.HTTP_204_NO_CONTENT
         )
