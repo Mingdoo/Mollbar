@@ -1,8 +1,8 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
-from .serializers import ArticleSerializer
+from .serializers import ArticleSerializer, CommentSerializer
 from .models import Article
 
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -64,3 +64,22 @@ def article_detail(request, article_id):
             {'message': '게시글이 삭제되었습니다.'},
             status=status.HTTP_204_NO_CONTENT
         )
+
+
+@api_view(['GET', 'POST'])
+def comment_list(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+
+    # 게시글의 댓글 목록 보기 (READ)
+    if request.method == 'GET':
+        comments = article.comment_set.all()
+        serializer = CommentSerializer(comments, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    # 게시글에 새 댓글 작성하기 (CREATE)
+    else:
+        serializer = CommentSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(article=article, comment_user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)

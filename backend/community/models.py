@@ -27,4 +27,4 @@ class Comment(models.Model):
         ordering = ['-pk', ]
 
     def __str__(self):
-        self.content
+        return self.content
