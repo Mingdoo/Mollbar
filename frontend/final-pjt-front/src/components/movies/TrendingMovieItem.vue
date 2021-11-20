@@ -1,6 +1,8 @@
 <template>
   <div class="carouselbox" @click="movieDetail" style="display: inline;">
-    <img :src="movieUrl" alt="" class="img slider-img">
+    <router-link :to="`/movies/${trendingMovie.id}`">
+      <img :src="movieUrl" alt="" class="img slider-img">
+    </router-link>
   </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
   methods: {
     movieDetail(){
       this.$store.dispatch('movieDetail', this.trendingMovie)
-      this.$router.push({ name: 'MovieDetail' })
+      // this.$router.push({ name: 'MovieDetail' })
     },
   }
 }

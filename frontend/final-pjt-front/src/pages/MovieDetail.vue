@@ -23,9 +23,16 @@ export default {
   name: 'MovieDetail',
   data: function() {
     return {
-      selectedMovie: this.$store.state.selectedMovie,
-      selectedMovieUrl: '',
+      selectedMovieUrl: null,
     }
+  },
+  computed: {
+    selectedMovie() {
+      return this.$store.state.selectedMovie
+    },
+    // selectedMovieUrl() {
+      
+    // }
   },
   updated(){
   },

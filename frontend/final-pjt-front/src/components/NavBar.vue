@@ -28,10 +28,13 @@
             <router-link to="/signup" class="nav-link">(회원가입)</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/v404v" class="nav-link disabled">(404)</router-link>
+            <router-link to="/v404v" class="nav-link">(404)</router-link>
           </li>
           <li class="nav-item" v-if="isLogin">
             <a id="logoutlink" class="nav-link" @click="logOut" style="cursor:pointer;">(로그아웃)</a>
+          </li>
+          <li class="nav-item" v-if="isLogin">
+            <router-link to="/community" class="nav-link">(커뮤니티)</router-link>
           </li>
         </ul>
         <form class="d-flex">
@@ -66,6 +69,10 @@ export default {
   },
   computed: {
     isLogin() {
+      if (localStorage.getItem('jwt')) {
+        const token = localStorage.getItem('jwt');
+        this.$store.dispatch('setJwtToken', token)
+      }
       return this.$store.state.isLogin
     }
   }

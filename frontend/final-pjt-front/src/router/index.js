@@ -7,6 +7,8 @@ import Login from '@/components/accounts/Login';
 import MovieDetail from '@/pages/MovieDetail';
 import SignUp from '@/components/accounts/SignUp';
 import CommunityHome from '@/pages/CommunityHome'
+import ArticleCreationForm from '@/components/community/ArticleCreationForm';
+import ArticleDetail from '@/pages/ArticleDetail';
 
 Vue.use(VueRouter)
 
@@ -35,19 +37,29 @@ const routes = [
   },
   // movies
   {
-    path: '/detail',
+    path: '/movies/:movie_id',
     name: 'MovieDetail',
     component: MovieDetail
   },
+  // {
+  //   path: '/detail',
+  //   name: 'MovieDetail',
+  //   component: MovieDetail
+  // },
   {
-    path: '/detail',
-    name: 'MovieDetail',
-    component: MovieDetail
-  },
-  {
-    path: '/community/',
+    path: '/community',
     name: 'CommunityHome',
     component: CommunityHome
+  },
+  {
+    path: '/community/create',
+    name: 'ArticleCreationForm',
+    component: ArticleCreationForm
+  },
+  {
+    path: '/community/:article_id',
+    name: 'ArticleDetail',
+    component: ArticleDetail
   },
   { path: "*", component: NotFound }
 ]
