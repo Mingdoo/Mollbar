@@ -7,8 +7,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 import re
 
-from rest_framework.serializers import Serializer
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ProfileSerializer
 
 
 LOWERCASE_OR_NUMBER = re.compile('^([a-z0-9])')
@@ -109,3 +108,12 @@ def change_password(request):
         user.save()                      # 유저 정보 DB에 저장
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+def profile(request, user_id):
+    # user_id를 받아서 해당 유저의 정보를 리턴한다.
+    user = get_object_or_404(get_user_model(), id=user_id)
+
+    serializer = ProfileSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
