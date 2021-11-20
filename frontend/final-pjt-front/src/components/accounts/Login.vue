@@ -40,10 +40,11 @@ export default {
         .then((res) => {
           localStorage.setItem('jwt', res.data.access)
           this.$store.dispatch('changeLogged')
+          this.$store.dispatch('setJwtToken', res.data.access)
           this.$router.push({name: "Home"})
         })
-        .catch((err)=> {
-          console.log(err)
+        .catch(({err})=> {
+          alert(err)
         })
     }
   },

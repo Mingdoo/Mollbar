@@ -18,10 +18,10 @@ export default {
     NavBar,
     FooTer,
   },
-  data() {
-    return {
-    }
-  },
+  // data() {
+  //   return {
+  //   }
+  // },
   // created() {
   //   const token = localStorage.getItem('jwt')
   //   if (token) {
@@ -44,7 +44,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: darkslategray;
+  /* background-color: darkslategray; */
 }
 
 #nav {
