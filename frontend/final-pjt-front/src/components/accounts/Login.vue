@@ -14,7 +14,7 @@
       v-model="credentials.password"
       @keyup.enter="loginEvent" class="mb-5"
     >
-    <input type="submit" value="Submit" @click="loginEvent">
+    <input type="submit" value="Submit" id="loginButton" @click="loginEvent">
   </div>
 </template>
 
@@ -26,7 +26,10 @@ export default {
   name: "Login",
   data() {
     return {
-      credentials: {},
+      credentials: {
+        username: '',
+        password: '',
+      },
       loginUrl: BASE_URL + 'api/v1/accounts/token/'
     }
   },
@@ -43,14 +46,24 @@ export default {
           this.$store.dispatch('setJwtToken', res.data.access)
           this.$router.push({name: "Home"})
         })
-        .catch(({err})=> {
-          alert(err)
+        .catch(()=> {
+          alert('로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해주세요.')
         })
-    }
+    },
   },
+  updated() {
+    const btn = document.querySelector('#loginButton')
+    if (this.credentials.username && this.credentials.password) {
+      btn.classList.add('blueButton')
+    } else {
+      btn.classList.remove('blueButton')
+    }
+  }
 }
 </script>
 
 <style>
-
+.blueButton {
+  background-color: chartreuse;
+}
 </style>
