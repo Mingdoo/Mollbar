@@ -1,5 +1,5 @@
 <template>
-  <div class="carouselbox" @click="movieDetail" style="display: inline;">
+  <div class="carouselbox" @click="movieDetail(trendingMovie)" style="display: inline;">
     <router-link :to="`/movies/${trendingMovie.id}`">
       <img :src="movieUrl" alt="" class="img slider-img">
     </router-link>
@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 const BASE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
@@ -25,9 +26,19 @@ export default {
     }
   },
   methods: {
-    movieDetail(){
-      this.$store.dispatch('movieDetail', this.trendingMovie)
-      // this.$router.push({ name: 'MovieDetail' })
+    movieDetail(selectedMovie){
+      axios({
+        method:'get',
+        url: `http://127.0.0.1:8000/api/v1/movies/${selectedMovie.id}`
+      })
+      .then((res) => {
+        this.$store.dispatch('movieDetail', res.data)
+        this.$router.push({ name: 'MovieDetail' })
+        // console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
   }
 }

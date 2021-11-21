@@ -71,7 +71,7 @@ export default {
         }
       })
         .then((res) => {
-          console.log(res.data)
+          this.$store.dispatch('commentCreated', res.data)
         })
     }
   },
