@@ -76,3 +76,54 @@ def rate_movie(request, movie_id):
                 {'message': '평가가 삭제되었습니다.'},
                 status=status.HTTP_204_NO_CONTENT
             )
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def search(request):
+    """
+    [request 예시]
+    GET '{{BASE_URL}}/api/v1/movies/search/'
+
+    data: {
+        "query": "토이",
+        "genre": 16,
+        "min_rate": 7.8,
+    }
+
+    [response 예시]
+    [
+        {
+            "id": 862,
+            "title": "토이 스토리",
+            "released_date": "1995-10-30",
+            ...
+        },
+    ]
+    """
+    search_word = request.data.get('query', '').strip()
+    genre = request.data.get('genre', '')
+    min_rate = request.data.get('min_rate', 0)
+
+    # 1. 검색어 필터링
+    if search_word:
+        movies = Movie.objects.filter(title__icontains=search_word)
+    else:
+        movies = Movie.objects.all()
+    
+    # 2. 장르 필터링
+    if genre:
+        movies = movies.filter(genres=genre)
+        
+    # 3. 유저 평점 필터링
+    if min_rate:
+        movies = movies.filter(vote_avg__gte=min_rate)
+
+    if not movies:
+        return Response(
+            {"message": "조건을 만족하는 영화가 없습니다."},
+            status=status.HTTP_204_NO_CONTENT
+        )
+
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
