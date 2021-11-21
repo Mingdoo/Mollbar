@@ -86,6 +86,9 @@ export default {
       editcomment.classList.add('commentformhidden')
       editcomment.classList.remove('commentformvisible')
     }
+  },
+  created() {
+    
   }
 }
 </script>

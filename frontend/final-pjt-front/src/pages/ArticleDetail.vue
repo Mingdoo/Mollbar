@@ -80,7 +80,7 @@ export default {
       if(this.isMyArticle){
         console.log(article)
         console.log(this.$store.state.selectedArticle)
-        this.$router.push({name: "ArticleCreationForm", params: {article: this.$store.state.selectedArticle}})
+this.$router.push({name: "ArticleCreationForm", params: {article: this.$store.state.selectedArticle}})        
       }
     },
     },
