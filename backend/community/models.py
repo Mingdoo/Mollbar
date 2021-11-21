@@ -28,3 +28,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Kmovie(models.Model):
+    movie_id = models.IntegerField(unique=True)
+    title = models.CharField(max_length=100)
+    vote_count = models.IntegerField()
+    poster_path = models.CharField(max_length=200)
+
+    class Meta:
+        ordering = ['?']  # 랜덤 정렬
+
+    def __str__(self):
+        return self.title
+        

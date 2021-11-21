@@ -1,6 +1,7 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import ArticleSerializer, CommentSerializer
-from .models import Article, Comment
+from .models import Article, Comment, Kmovie
+import random
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -59,7 +60,7 @@ def article_detail(request, article_id):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        article.detele()
+        article.delete()
         return Response(
             {'message': '게시글이 삭제되었습니다.'},
             status=status.HTTP_204_NO_CONTENT
@@ -110,3 +111,48 @@ def comment_update_or_delete(request, article_id, comment_id):
             {'message': '댓글이 삭제되었습니다.'},
             status=status.HTTP_204_NO_CONTENT
         )
+
+
+@api_view(['GET'])
+def get_korean_movies(request):
+    """
+    10개의 사지선다 한국영화 퀴즈 set를 만든다.
+
+    [응답 데이터 형태]
+
+    [
+        {
+            "poster_path": "/adfasdfssdfsdasdfsdfasdf.jpg",
+            "options": [
+                { "title": "승리호", "isCorrect": false },
+                { "title": "반도", "isCorrect": false },
+                { "title": "기생충", "isCorrect": true },
+                { "title": "부산행", "isCorrect": false },
+            ]
+        },
+    ]
+    """
+    # model에서 ordering = ['?'] 조건을 주었으므로, 요청 시마다 랜덤 정렬된 queryset이 넘어온다.
+    kmovies = Kmovie.objects.all()[:40]
+    quiz_set = []
+
+    for i in range(0, 40, 4):
+        movie1 = kmovies[i]
+        movie2 = kmovies[i + 1]
+        movie3 = kmovies[i + 2]
+        movie4 = kmovies[i + 3]
+
+        quiz_data = {
+            "poster_path": movie1.poster_path,
+            "options": [
+                { "title": movie1.title, "isCorrect": True },
+                { "title": movie2.title, "isCorrect": False },
+                { "title": movie3.title, "isCorrect": False },
+                { "title": movie4.title, "isCorrect": False },
+            ]
+        }
+
+        random.shuffle(quiz_data["options"])
+        quiz_set.append(quiz_data)
+
+    return Response(data=quiz_set)
