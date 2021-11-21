@@ -2,6 +2,7 @@
   <div>
     <h5 v-for="comment in comments" :key="comment.id">
       {{ comment.content }}
+      {{ comment.comment_user }}
       {{ comment.created_at }}
       <button class="btn btn-warning" v-if="comment.comment_user === $store.state.userId" @click="deleteComment(comment)">Delete</button>
     </h5>
