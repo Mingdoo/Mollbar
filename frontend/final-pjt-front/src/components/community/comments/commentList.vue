@@ -10,20 +10,33 @@
 </template>
 
 <script>
-// import axios from 'axios'
+const API_BASE_URL = 'http://127.0.0.1:8000/api/v1/community/'
+const token = localStorage.getItem('jwt')
+
+import axios from 'axios'
 export default {
   name: "CommentList",
   computed: {
     comments() {
       return this.$store.state.selectedArticleComments
     },
+    selectedArticle() {
+      return this.$store.state.selectedArticle
+    }
   },
   methods: {
     deleteComment(comment) {
-      // axios({
-        
-      //   })
-      console.log(comment.id)
+      axios({
+        method: 'delete',
+        url: `${API_BASE_URL}${this.selectedArticle.id}/comments/${comment.id}/`,
+        headers: {
+          Authorizaion: `Bearer ${token}`
+        }
+        })
+          .then((res) => {
+            console.log(res)
+          })
+      // console.log(`${API_BASE_URL}${this.selectedArticle.id}/comments/${comment.id}/`)
     }
   }
 }
