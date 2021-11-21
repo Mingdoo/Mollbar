@@ -27,7 +27,7 @@ export default {
   methods: {
     createArticle() {
       if (localStorage.getItem('jwt')){
-        this.$router.push({ name: "ArticleCreationForm" })  
+        this.$router.push({ name: "ArticleCreationForm", params: { article: ''}})  
       }
     }
   }

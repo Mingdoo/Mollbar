@@ -3,8 +3,9 @@
     <h1>{{ selectedArticle.article_title }}</h1>
     <h4>{{ selectedArticle.article_content }}</h4>
     <button class="btn btn-warning" @click="deleteArticle" v-if="isMyArticle">Delete</button>
+    <button class="btn btn-secondary" @click="updateArticle(selectedArticle)" v-if="isLogin">Update</button>
     <input type="text" name="" id="" v-if="isLogin" v-model="userComment">
-    <button class="btn btn-primary mt-3" @click="commentSubmit">Submit</button>
+    <button class="btn btn-primary mt-3" @click="commentSubmit" v-if="isLogin">Submit</button>
     <comment-list></comment-list>
   </div>
 </template>
@@ -71,27 +72,18 @@ export default {
         }
       })
         .then((res) => {
-          console.log(res.data)
+          this.$store.dispatch('commentCreated', res.data)
+          this.userComment = ''
         })
-    }
-  },
-  // beforeUpdate() {
-  //   const token = localStorage.getItem('jwt')
-  //   axios({
-  //     method: 'get',
-  //     url: this.articleUrl + '/comments/',
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((res) => {
-  //       console.log(res)
-  //       this.articleComments = res.data
-  //     }) 
-  //     .catch(() => {
-  //       this.articleComments = ''
-  //     })
-  //   }
+      },
+    updateArticle(article) {
+      if(this.isMyArticle){
+        console.log(article)
+        console.log(this.$store.state.selectedArticle)
+this.$router.push({name: "ArticleCreationForm", params: {article: this.$store.state.selectedArticle}})        
+      }
+    },
+    },
   }
 
   

@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-8 media">
-      <iframe :src="selectedMovieUrl" frameborder="0" allow="fullscreen;"></iframe>
+      <iframe :src="`https://youtube.com/embed/${selectedMovie.video_url}`" frameborder="0" allow="fullscreen;"></iframe>
     </div>
     <div class="col-4 np">
       <h1>
@@ -16,41 +16,21 @@
 </template>
 
 <script>
-import axios from 'axios';
-const API_KEY = process.env.VUE_APP_API_KEY
+// const API_KEY = process.env.VUE_APP_API_KEY
 
 export default {
   name: 'MovieDetail',
   data: function() {
     return {
-      selectedMovieUrl: null,
     }
   },
   computed: {
     selectedMovie() {
       return this.$store.state.selectedMovie
     },
-    // selectedMovieUrl() {
-      
-    // }
   },
   updated(){
   },
-  mounted() {
-    if (this.$store.state.selectedMovie){
-      axios({
-        method: 'get',
-        url: `https://api.themoviedb.org/3/movie/${this.$store.state.selectedMovie.id}/videos`,
-        params: {
-          api_key: API_KEY
-        }
-      })
-        .then((res) => {
-          console.log(res)
-          this.selectedMovieUrl = `https://www.youtube.com/embed/${res.data.results[0].key}`
-        })
-    }
-  }
 }
 </script>
 
