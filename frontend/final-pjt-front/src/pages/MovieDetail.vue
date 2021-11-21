@@ -1,10 +1,9 @@
 <template>
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-8 media">
       <iframe :src="`https://youtube.com/embed/${selectedMovie.video_url}`" frameborder="0" allow="fullscreen;"></iframe>
     </div>
     <div class="col-4 np">
-      {{ selectedMovie.video_url }}
       <h1>
         {{ selectedMovie.title }}
       </h1>
