@@ -33,7 +33,7 @@ export default {
       })
       .then((res) => {
         this.$store.dispatch('movieDetail', res.data)
-        this.$router.push({ name: 'MovieDetail' })
+        this.$router.push({ name: 'MovieDetail' }).catch(() => {})
         // console.log(res)
       })
       .catch((err) => {
