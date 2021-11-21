@@ -14,7 +14,7 @@
       <input type="text" name="" id="title" @input="article_title=$event.target.value" required v-bind:value="this.$route.params.article.article_title">
       <label for="content">content</label>
       <input type="text" name="" id="content" @input="article_content=$event.target.value" required :value="this.$route.params.article.article_content">
-      <button @click="updateArticle">update</button>
+      <button class="btn btn-primary" @click="updateArticle">update</button>
     </div>
   </div>
 </template>
@@ -79,7 +79,14 @@ export default {
       } else {
         alert('title과 content를 1자이상 입력하세요')
       }
-  }}
+  }},
+  //mounted를 사용해서 update정보를 끌어옴
+  mounted() {
+    if (this.$route.params.article) {
+      this.article_title = this.$route.params.article.article_title
+      this.article_content = this.$route.params.article.article_content
+    }
+  }
 }
 </script>
 
