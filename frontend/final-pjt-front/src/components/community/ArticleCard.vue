@@ -1,7 +1,7 @@
 <template>
   <div>
-    <router-link :to="`/community/${article.id}`" @click.native="selectArticle">{{ article.article_title }}</router-link>
-    <h5>{{ article.user }}</h5>
+    <router-link :to="`/community/${article.id}`" @click.native="selectArticle">{{ article.article_title }}</router-link> |
+    <h5 class="d-inline">작성자 : {{ article.username }}</h5>
 
   </div>
 </template>

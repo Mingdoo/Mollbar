@@ -37,13 +37,17 @@ export default {
       console.log(event)
     },
     clickLeft() {
+      console.log(this.$el.children[1].clientHeight)
+      console.log(this.$el.children[1].clientWidth)
+      console.log(this)
       $('.carousel').animate({
           scrollLeft: (this.scrollAmount -= this.scrollPerclick)
-        }, 200);
+        }, 400);
       // this.scrollAmount -= this.scrollPerclick
     },
     clickRight() {
       const sliders = document.querySelector('.carousel')
+      console.log(this.$el.clientLeft)
       // this.scrollAmount += this.scrollPerclick
       if (this.scrollAmount <= sliders.scrollWidth - sliders.clientWidth){
         $('.carousel').animate({

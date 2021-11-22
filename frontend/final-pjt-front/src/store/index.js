@@ -7,8 +7,11 @@ export default new Vuex.Store({
   state: {
     trendingMovieList: [],
     selectedMovie: '',
+    selectedMovieLiked: '',
+    
     selectedArticle: '',
     selectedArticleComments: [],
+    popularByGenre: {},
     userId: null,
     isLogin: false,
     token: null,
@@ -16,6 +19,7 @@ export default new Vuex.Store({
   mutations: {
     MOVIE_DETAIL(state, trendingMovie) {
       state.selectedMovie = trendingMovie
+      console.log(state.selectedMovieLiked)
     },
     CHANGE_LOGGED(state){
       state.isLogin = !state.isLogin
@@ -56,20 +60,20 @@ export default new Vuex.Store({
     },
     UPDATE_MOVIE_RATING(state, rating) {
       state.selectedMovie.ratings = state.selectedMovie.ratings.map((tmpRating) => {
-        if (tmpRating.id === rating.id) {
+        if (tmpRating.user === rating.user) {
           return rating
         } else {
-          if (state.selectedMovie.ratings.every((tmpRating_) => {
-            return tmpRating_.id !== rating.id
-          })) {
-            state.selectedMovie.ratings.unshift(rating)
-          } else {
-            return tmpRating
-          }
-
+          return tmpRating
         }
-        
       })
+      if (state.selectedMovie.ratings.every((tmp) => {
+        return tmp.user !== rating.user
+      })){
+        state.selectedMovie.ratings.unshift(rating)
+      }
+    },
+    POPULAR_BY_GENRE(state, params){
+      state.popularByGenre[params.genre] = params.data
     }
   },
   actions: {
@@ -99,6 +103,10 @@ export default new Vuex.Store({
     },
     updateMovieRating({ commit }, rating) {
       commit('UPDATE_MOVIE_RATING', rating)
+    },
+    popularByGenre({ commit }, params) {
+      // console.log(params)
+      commit('POPULAR_BY_GENRE', params)
     }
   },
   modules: {

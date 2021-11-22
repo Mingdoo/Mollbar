@@ -34,14 +34,31 @@ export default {
         language: 'ko-KR'
       }
     })
-      .then((res) => {
-        // console.log(res)
-        this.trendingMovieList = res.data.results
-        this.$store.state.trendingMovieList = res.data.results
+    .then((res) => {
+      // console.log(res)
+      this.trendingMovieList = res.data.results
+      this.$store.state.trendingMovieList = res.data.results
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    const genres = [12, 14, 16, 18, 27, 28, 35, 36, 37, 53, 80, 99, 878, 9648, 10402, 10749, 10751, 10752, 10770]
+    genres.forEach((genre) => {
+      axios({
+        method: 'get',
+        url: `http://127.0.0.1:8000/api/v1/movies/genre-popular/${genre}/`,
       })
-      .catch((err) => {
-        console.log(err)
+        .then((res) => {
+          this.$store.dispatch('popularByGenre', {
+            genre: genre,
+            data: res.data
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
       })
+    }
   }
-}
 </script>

@@ -12,10 +12,15 @@
         {{ selectedMovie.overview }}
       </h5>
     </div>
-    <div>
-      <input type="number" name="" id="userRating" min="1" max="10" required>
-      <input type="text" name="" id="userReview">
-      <button class="btn btn-primary" @click="updateMovieRating(selectedMovie)">Submit</button>
+    <div class="col-2 mt-5">
+      <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
+    </div>
+    <div class="col-10">
+      <div>
+        <input type="number" name="" id="userRating" min="1" max="10" required>
+        <input type="text" name="" id="userReview">
+        <button class="btn btn-primary" @click="updateMovieRating(selectedMovie)">Submit</button>
+      </div>
     </div>
     <div v-for="rating in selectedMovie.ratings" :key="rating.id">
       <div class="d-visible" :id="`normalReview${rating.id}`">
@@ -68,6 +73,9 @@ export default {
       })
         .then((res) => {
           this.$store.dispatch('updateMovieRating', res.data) 
+          userRating.value = ''
+          userReview.value = ''
+          console.log(this.$store.state.selectedMovie)
         })
     },
     editMovieRating(rating) {
@@ -119,16 +127,44 @@ export default {
           Authorization: `Bearer ${token}`
         },
       })
-       .then((res) => {
-         console.log(res)
-         console.log(rating)
-         const normalReview = document.querySelector(`#normalReview${rating.id}`)
-         normalReview.classList.remove('d-visible')
-         normalReview.classList.add('d-none')
-       })
+      .then((res) => {
+        console.log(res)
+        console.log(rating)
+        const normalReview = document.querySelector(`#normalReview${rating.id}`)
+        normalReview.classList.remove('d-visible')
+        normalReview.classList.add('d-none')
+      })
     },
+    changeLike(movie) {
+      const token = localStorage.getItem('jwt')
+      axios({
+        method: 'post',
+        url: `${API_BASE_URL}${movie.id}/wishlist/`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      })
+        .then((res) => {
+          console.log(res)
+          console.log(this.$store.state.selectedMovieLiked)
+          const likebtn = document.querySelector('#changeLikeBtn')
+          if (likebtn.innerText === 'like') {
+            likebtn.innerText = 'dislike'
+          } else {
+            likebtn.innerText = 'like'
+          }
+        })
+    }
   },
-  updated(){
+  created(){
+    console.log('!!!!')
+    console.log(this.$store.state.popularByGenre)
+    // const likebtn = document.querySelector('#changeLikeBtn')
+    // if (this.$store.state.selectedMovieLiked) {
+    //   likebtn.innerText = 'dislike'
+    // } else {
+    //   likebtn.innerText = 'like'
+    // }
   },
 }
 </script>

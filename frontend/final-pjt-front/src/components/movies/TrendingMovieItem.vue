@@ -2,6 +2,7 @@
   <div class="carouselbox" @click="movieDetail(trendingMovie)" style="display: inline;">
     <router-link :to="`/movies/${trendingMovie.id}`">
       <img :src="movieUrl" alt="" class="img slider-img">
+      <!-- <span class="button heartButton"></span> -->
     </router-link>
   </div>
 </template>
@@ -32,7 +33,8 @@ export default {
         url: `http://127.0.0.1:8000/api/v1/movies/${selectedMovie.id}`
       })
       .then((res) => {
-        this.$store.dispatch('movieDetail', res.data)
+        console.log(res)
+        this.$store.dispatch('movieDetail', res.data[0])
         this.$router.push({ name: 'MovieDetail' }).catch(() => {})
         // console.log(res)
       })
@@ -48,25 +50,39 @@ export default {
 <style scoped>
 
 .carouselbox {
-  height: 10%;
+  height: 100%;
   width: auto;
   display: inline-block;
   text-align: center;
   padding-bottom: 10px !important;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .carouselbox img {
   height: 75%;
-  background-size: cover;
+  background-size: contain;
   margin: 0px 20px;
-  cursor: pointer;
   transition: 0.5s ease;
-  z-index: 2;
+  /* z-index: 2; */
   margin-top: 6%;
 }
 .carouselbox img:hover {
-  transform: scale(1.3);
+  transform: scale(1.2);
   z-index: 5;
 }
+
+/* .heartButton {
+  position: relative;
+  top: -23%;
+  left: -6%;
+  z-index: 1;
+  text-decoration: none;
+} */
+
+/* .carouselbox span:hover {
+  transform: scale(2);
+  z-index: 6;
+} */
+
 </style>
