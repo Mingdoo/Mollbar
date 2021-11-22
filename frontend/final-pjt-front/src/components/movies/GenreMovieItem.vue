@@ -1,8 +1,11 @@
 <template>
-  <div class="carouselbox" @click="movieDetail(trendingMovie)" style="display: inline;">
-    <router-link :to="`/movies/${trendingMovie.id}`">
+  <!-- <div>
+    {{ movieByGenre }}
+  </div> -->
+  <div class="carouselbox" @click="movieDetail(movieByGenre)" style="display: inline;">
+    <router-link :to="`/movies/${movieByGenre.id}`">
       <img :src="movieUrl" alt="" class="img slider-img">
-      <!-- <span class="button heartButton"></span> -->
+      <span class="button heartButton"></span>
     </router-link>
   </div>
 </template>
@@ -12,31 +15,25 @@ import axios from 'axios'
 const BASE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
-  name: 'MovieItem',
-  data() {
-    return {
-
-    }
-  },
+  name: "GenreMovieItem",
   props: {
-    trendingMovie: Object
+    movieByGenre: Object
   },
   computed: {
     movieUrl: function() {
-      return BASE_URL + this.trendingMovie.poster_path
+      return BASE_URL + this.movieByGenre.poster_path
     }
   },
   methods: {
     movieDetail(selectedMovie){
       axios({
         method:'get',
-        url: `http://127.0.0.1:8000/api/v1/movies/${selectedMovie.id}`
+        url: `http://127.0.0.1:8000/api/v1/movies/${selectedMovie.id}/`
       })
       .then((res) => {
         console.log(res)
         this.$store.dispatch('movieDetail', res.data[0])
         this.$router.push({ name: 'MovieDetail' }).catch(() => {})
-        // console.log(res)
       })
       .catch((err) => {
         console.log(err)
@@ -44,11 +41,9 @@ export default {
     },
   }
 }
-
 </script>
 
 <style scoped>
-
 .carouselbox {
   height: 100%;
   width: auto;
@@ -71,18 +66,4 @@ export default {
   transform: scale(1.2);
   z-index: 5;
 }
-
-/* .heartButton {
-  position: relative;
-  top: -23%;
-  left: -6%;
-  z-index: 1;
-  text-decoration: none;
-} */
-
-/* .carouselbox span:hover {
-  transform: scale(2);
-  z-index: 6;
-} */
-
 </style>

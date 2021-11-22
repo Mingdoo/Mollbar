@@ -7,8 +7,11 @@ export default new Vuex.Store({
   state: {
     trendingMovieList: [],
     selectedMovie: '',
+    myWishList: [],
+    
     selectedArticle: '',
     selectedArticleComments: [],
+    popularByGenre: {},
     userId: null,
     isLogin: false,
     token: null,
@@ -16,6 +19,7 @@ export default new Vuex.Store({
   mutations: {
     MOVIE_DETAIL(state, trendingMovie) {
       state.selectedMovie = trendingMovie
+      console.log(state.selectedMovieLiked)
     },
     CHANGE_LOGGED(state){
       state.isLogin = !state.isLogin
@@ -36,7 +40,44 @@ export default new Vuex.Store({
       state.selectedArticleComments = comments 
     },
     COMMENT_CREATED(state, comment){
-      state.selectedArticleComments.push(comment)
+      state.selectedArticleComments.unshift(comment)
+    },
+    EDIT_COMMENT(state, comment) {
+      // console.log(state.selectedArticleComments)
+      // console.log(comment)
+      state.selectedArticleComments = state.selectedArticleComments.map((cmt) =>{
+        if (cmt.id === comment.id) {
+          return comment
+        } else {
+          return cmt
+        }
+      })
+    },
+    DELETE_COMMENT(state, commentId) {
+      state.selectedArticleComments = state.selectedArticleComments.filter((cmt) => {
+        return cmt.id !== commentId
+      })
+    },
+    UPDATE_MOVIE_RATING(state, rating) {
+      state.selectedMovie.ratings = state.selectedMovie.ratings.map((tmpRating) => {
+        if (tmpRating.user === rating.user) {
+          return rating
+        } else {
+          return tmpRating
+        }
+      })
+      if (state.selectedMovie.ratings.every((tmp) => {
+        return tmp.user !== rating.user
+      })){
+        state.selectedMovie.ratings.unshift(rating)
+      }
+    },
+    POPULAR_BY_GENRE(state, params){
+      state.popularByGenre[params.genre] = params.data
+    },
+    MY_WISH_LIST(state, data){
+      state.myWishList = data.wishlist
+      // console.log(state.myWishList)
     }
   },
   actions: {
@@ -57,6 +98,22 @@ export default new Vuex.Store({
     },
     commentCreated({ commit }, comment){
       commit('COMMENT_CREATED', comment)
+    },
+    editComment({ commit }, comment) {
+      commit('EDIT_COMMENT', comment)
+    },
+    deleteComment({ commit }, commentId) {
+      commit('DELETE_COMMENT', commentId)
+    },
+    updateMovieRating({ commit }, rating) {
+      commit('UPDATE_MOVIE_RATING', rating)
+    },
+    popularByGenre({ commit }, params) {
+      // console.log(params)
+      commit('POPULAR_BY_GENRE', params)
+    },
+    myWishList({ commit }, data){
+      commit('MY_WISH_LIST', data)
     }
   },
   modules: {

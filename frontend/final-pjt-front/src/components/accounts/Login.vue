@@ -46,6 +46,21 @@ export default {
           this.$store.dispatch('setJwtToken', res.data.access)
           this.$router.push({name: "Home"})
         })
+        .then(() => {
+          axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/v1/accounts/my_wishlist/',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+          })
+          .then((res) => {
+            this.$store.dispatch('myWishList', res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        })
         .catch(()=> {
           alert('로그인에 실패하였습니다. 아이디와 비밀번호를 다시 입력해주세요.')
         })
