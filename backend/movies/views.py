@@ -57,7 +57,7 @@ def rate_movie(request, movie_id):
             serializer = RatingSerializer(data=request.data)
 
             if serializer.is_valid(raise_exception=True):
-                serializer.save(user=request.user, movie=movie)
+                serializer.save(user=request.user, username=request.user.username, movie=movie)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         # 해당 영화에 대한 평가가 있는 경우 => 평가 수정 (UPDATE)
@@ -65,7 +65,7 @@ def rate_movie(request, movie_id):
             serializer = RatingSerializer(rating, data=request.data)
 
             if serializer.is_valid(raise_exception=True):
-                serializer.save(user=request.user, movie=movie)
+                serializer.save(user=request.user, username=request.user.username, movie=movie)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     # 평가 삭제 (DELETE)
@@ -127,3 +127,17 @@ def search(request):
 
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def add_wishlist(request, movie_id):
+    movie = get_object_or_404(Movie, movie_id=movie_id)
+
+    if movie in request.user.wishlist.all():
+        request.user.wishlist.remove(movie)
+        print('remove')
+        return Response(status=status.HTTP_200_OK)
+    else:
+        request.user.wishlist.add(movie)
+        print('add')
+        return Response(status=status.HTTP_200_OK)

@@ -23,7 +23,7 @@ def article_list(request):
         serializer = ArticleSerializer(data=request.data)
         
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save(user=request.user, username=request.user.username)
             return Response(serializer.data, status.HTTP_201_CREATED)
 
 
@@ -82,7 +82,7 @@ def comment_list(request, article_id):
         serializer = CommentSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
-            serializer.save(article=article, comment_user=request.user)
+            serializer.save(article=article, comment_user=request.user, username=request.user.username)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

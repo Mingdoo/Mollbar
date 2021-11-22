@@ -7,4 +7,5 @@ urlpatterns = [
     path('search/', views.search),
     path('<int:movie_id>/', views.movie_detail),
     path('<int:movie_id>/ratings/', views.rate_movie),
+    path('<int:movie_id>/wishlist/', views.add_wishlist),
 ]
