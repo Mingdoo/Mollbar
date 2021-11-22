@@ -55,7 +55,21 @@ export default new Vuex.Store({
       })
     },
     UPDATE_MOVIE_RATING(state, rating) {
-      state.selectedMovie.ratings.unshift(rating)
+      state.selectedMovie.ratings = state.selectedMovie.ratings.map((tmpRating) => {
+        if (tmpRating.id === rating.id) {
+          return rating
+        } else {
+          if (state.selectedMovie.ratings.every((tmpRating_) => {
+            return tmpRating_.id !== rating.id
+          })) {
+            state.selectedMovie.ratings.unshift(rating)
+          } else {
+            return tmpRating
+          }
+
+        }
+        
+      })
     }
   },
   actions: {
