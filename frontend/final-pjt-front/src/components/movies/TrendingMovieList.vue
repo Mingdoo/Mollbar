@@ -4,9 +4,8 @@
     <div class="carousel">
       <trending-movie-item
         v-for="trendingMovie in trendingMovieList"
-        :key=trendingMovie.id
+        :key="trendingMovie.id"
         :trending-movie="trendingMovie"
-        @movie-detail="movieDetail"
       >
       </trending-movie-item>
     </div>
@@ -20,41 +19,37 @@ import $ from 'jquery';
 
 export default {
   name: 'MovieList',
-  props: {
-    trendingMovieList: Array,
-  },
   data() {
     return {
       scrollAmount: 0,
-      scrollPerclick: 400
+      scrollPerclick: 200
     }
   },
   components: {
     TrendingMovieItem,
   },
   methods: {
-    movieDetail(event) {
-      console.log(event)
-    },
     clickLeft() {
-      console.log(this.$el.children[1].clientHeight)
-      console.log(this.$el.children[1].clientWidth)
-      console.log(this)
       $('.carousel').animate({
           scrollLeft: (this.scrollAmount -= this.scrollPerclick)
         }, 400);
-      // this.scrollAmount -= this.scrollPerclick
+      this.scrollAmount -= this.scrollPerclick
     },
     clickRight() {
       const sliders = document.querySelector('.carousel')
       console.log(this.$el.clientLeft)
-      // this.scrollAmount += this.scrollPerclick
+      this.scrollAmount += this.scrollPerclick
       if (this.scrollAmount <= sliders.scrollWidth - sliders.clientWidth){
         $('.carousel').animate({
           scrollLeft: (this.scrollAmount += this.scrollPerclick)
           }, 400);
         }
     },
+  },
+  computed: {
+    trendingMovieList() {
+      return this.$store.state.trendingMovieList
+    }
   }
 }
 </script>

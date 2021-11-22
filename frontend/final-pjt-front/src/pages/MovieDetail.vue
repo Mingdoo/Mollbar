@@ -145,26 +145,37 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res)
-          console.log(this.$store.state.selectedMovieLiked)
+          axios({
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/v1/accounts/my_wishlist/',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+          })
+          .then((res) => {
+            this.$store.dispatch('myWishList', res.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
           const likebtn = document.querySelector('#changeLikeBtn')
           if (likebtn.innerText === 'like') {
             likebtn.innerText = 'dislike'
           } else {
             likebtn.innerText = 'like'
           }
+          console.log(res)
         })
     }
   },
-  created(){
-    console.log('!!!!')
-    console.log(this.$store.state.popularByGenre)
-    // const likebtn = document.querySelector('#changeLikeBtn')
-    // if (this.$store.state.selectedMovieLiked) {
-    //   likebtn.innerText = 'dislike'
-    // } else {
-    //   likebtn.innerText = 'like'
-    // }
+  mounted(){
+    const likebtn = document.querySelector('#changeLikeBtn')
+    console.log(this.$store.state.myWishList.includes(this.selectedMovie.id))
+    if (this.$store.state.myWishList.includes(this.selectedMovie.id)) {
+      likebtn.innerText = 'dislike'
+      } else {
+      likebtn.innerText = 'like'
+    }
   },
 }
 </script>

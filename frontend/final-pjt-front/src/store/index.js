@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     trendingMovieList: [],
     selectedMovie: '',
-    selectedMovieLiked: '',
+    myWishList: [],
     
     selectedArticle: '',
     selectedArticleComments: [],
@@ -74,6 +74,10 @@ export default new Vuex.Store({
     },
     POPULAR_BY_GENRE(state, params){
       state.popularByGenre[params.genre] = params.data
+    },
+    MY_WISH_LIST(state, data){
+      state.myWishList = data.wishlist
+      // console.log(state.myWishList)
     }
   },
   actions: {
@@ -107,6 +111,9 @@ export default new Vuex.Store({
     popularByGenre({ commit }, params) {
       // console.log(params)
       commit('POPULAR_BY_GENRE', params)
+    },
+    myWishList({ commit }, data){
+      commit('MY_WISH_LIST', data)
     }
   },
   modules: {
