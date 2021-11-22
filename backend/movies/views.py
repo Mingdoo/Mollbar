@@ -15,8 +15,18 @@ def movie_detail(request, movie_id):
     영화 상세 정보 및 해당 영화의 평점/리뷰 목록을 보여준다.
     """
     movie = get_object_or_404(Movie, movie_id=movie_id)
+
+    if request.user.is_anonymous:
+        is_in_wishlist = False
+    else:
+        is_in_wishlist = movie in request.user.wishlist.all()
+
     serializer = MovieDetailSerializer(movie)
-    return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    return Response(
+        data=[serializer.data, {"is_in_wishlist": is_in_wishlist}], 
+        status=status.HTTP_200_OK
+    )
 
 
 @api_view(['GET'])
@@ -130,14 +140,20 @@ def search(request):
 
 
 @api_view(['POST'])
-def add_wishlist(request, movie_id):
+def toggle_wishlist(request, movie_id):
     movie = get_object_or_404(Movie, movie_id=movie_id)
 
     if movie in request.user.wishlist.all():
         request.user.wishlist.remove(movie)
-        print('remove')
-        return Response(status=status.HTTP_200_OK)
+
+        return Response(
+            {"message": f'{movie.title}을 찜 목록에서 제거했습니다.'},
+            status=status.HTTP_200_OK
+        )
     else:
         request.user.wishlist.add(movie)
-        print('add')
-        return Response(status=status.HTTP_200_OK)
+
+        return Response(
+            {"message": f'{movie.title}을 찜 목록에 추가했습니다.'},
+            status=status.HTTP_204_NO_CONTENT
+        )
