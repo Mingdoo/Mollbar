@@ -53,6 +53,9 @@ export default new Vuex.Store({
       state.selectedArticleComments = state.selectedArticleComments.filter((cmt) => {
         return cmt.id !== commentId
       })
+    },
+    UPDATE_MOVIE_RATING(state, rating) {
+      state.selectedMovie.ratings.unshift(rating)
     }
   },
   actions: {
@@ -79,6 +82,9 @@ export default new Vuex.Store({
     },
     deleteComment({ commit }, commentId) {
       commit('DELETE_COMMENT', commentId)
+    },
+    updateMovieRating({ commit }, rating) {
+      commit('UPDATE_MOVIE_RATING', rating)
     }
   },
   modules: {
