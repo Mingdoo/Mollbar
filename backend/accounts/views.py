@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 import re
 
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import UserSerializer, ProfileSerializer, WishlistSerializer
 
 
 LOWERCASE_OR_NUMBER = re.compile('^([a-z0-9])')
@@ -116,4 +116,14 @@ def profile(request, user_id):
     user = get_object_or_404(get_user_model(), id=user_id)
 
     serializer = ProfileSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_wishlist(request):
+    """
+    로그인한 유저가 찜한 영화 목록을 보여준다.
+    """
+    serializer = WishlistSerializer(request.user)
+
     return Response(serializer.data, status=status.HTTP_200_OK)

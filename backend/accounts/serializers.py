@@ -14,3 +14,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('id', 'username', 'email', 'date_joined', 'wishlist', )
+
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('wishlist', )
