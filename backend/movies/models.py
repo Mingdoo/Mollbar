@@ -31,20 +31,9 @@ class Movie(models.Model):
         return self.title
 
 
-# class Review(models.Model):
-#     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-#     content = models.CharField(max_length=500)
-
-#     class Meta:
-#         ordering = ['-pk']
-    
-#     def __str__(self):
-#         return f'{self.movie} ({self.reviewer})'
-
-
 class Rating(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    username = models.CharField(null=True, max_length=50)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='ratings')
     rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     review = models.TextField(null=True)

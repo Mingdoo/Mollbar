@@ -8,17 +8,11 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class ReviewSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Review
-#         fields = '__all__'
-
-
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
-        read_only_fields = ('user', 'movie', )
+        read_only_fields = ('user', 'movie', 'username', )
 
 
 class MovieSerializer(serializers.ModelSerializer):
