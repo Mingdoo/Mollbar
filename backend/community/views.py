@@ -133,7 +133,7 @@ def get_korean_movies(request):
     ]
     """
     # model에서 ordering = ['?'] 조건을 주었으므로, 요청 시마다 랜덤 정렬된 queryset이 넘어온다.
-    kmovies = Kmovie.objects.all()[:40]
+    kmovies = Kmovie.objects.all()
     quiz_set = []
 
     for i in range(0, 40, 4):

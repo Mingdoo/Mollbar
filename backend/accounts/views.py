@@ -127,3 +127,24 @@ def get_wishlist(request):
     serializer = WishlistSerializer(request.user)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+def signout(request):
+    """
+    안내 사항에 동의함을 체크한 뒤, 버튼을 누르면 회원 탈퇴가 된다.
+    해당 유저의 영화 평가, 게시글/댓글, 찜한 목록 등도 모두 삭제된다.
+    """
+    if request.data['is_checked']:
+        request.user.delete()
+
+        return Response(
+            {"message": "회원 탈퇴가 완료되었습니다."},
+            status=status.HTTP_204_NO_CONTENT
+        )
+
+    else:
+        return Response(
+            {"message": "안내 사항에 동의해야만 회원 탈퇴가 가능합니다."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
