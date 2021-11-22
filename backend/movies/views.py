@@ -130,14 +130,20 @@ def search(request):
 
 
 @api_view(['POST'])
-def add_wishlist(request, movie_id):
+def toggle_wishlist(request, movie_id):
     movie = get_object_or_404(Movie, movie_id=movie_id)
 
     if movie in request.user.wishlist.all():
         request.user.wishlist.remove(movie)
-        print('remove')
-        return Response(status=status.HTTP_200_OK)
+
+        return Response(
+            {"message": f'{movie.title}을 찜 목록에서 제거했습니다.'},
+            status=status.HTTP_200_OK
+        )
     else:
         request.user.wishlist.add(movie)
-        print('add')
-        return Response(status=status.HTTP_200_OK)
+
+        return Response(
+            {"message": f'{movie.title}을 찜 목록에 추가했습니다.'},
+            status=status.HTTP_204_NO_CONTENT
+        )
