@@ -36,7 +36,23 @@ export default new Vuex.Store({
       state.selectedArticleComments = comments 
     },
     COMMENT_CREATED(state, comment){
-      state.selectedArticleComments.push(comment)
+      state.selectedArticleComments.unshift(comment)
+    },
+    EDIT_COMMENT(state, comment) {
+      // console.log(state.selectedArticleComments)
+      // console.log(comment)
+      state.selectedArticleComments = state.selectedArticleComments.map((cmt) =>{
+        if (cmt.id === comment.id) {
+          return comment
+        } else {
+          return cmt
+        }
+      })
+    },
+    DELETE_COMMENT(state, commentId) {
+      state.selectedArticleComments = state.selectedArticleComments.filter((cmt) => {
+        return cmt.id !== commentId
+      })
     }
   },
   actions: {
@@ -57,6 +73,12 @@ export default new Vuex.Store({
     },
     commentCreated({ commit }, comment){
       commit('COMMENT_CREATED', comment)
+    },
+    editComment({ commit }, comment) {
+      commit('EDIT_COMMENT', comment)
+    },
+    deleteComment({ commit }, commentId) {
+      commit('DELETE_COMMENT', commentId)
     }
   },
   modules: {

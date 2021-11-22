@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>COMMENT</h1>
     <h5 v-for="comment in comments" :key="comment.id">
       <div :id="`normalcomment${comment.id}`" class="commentformvisible">
         {{ comment.content }}
@@ -44,11 +45,11 @@ export default {
         method: 'delete',
         url: `${API_BASE_URL}${this.selectedArticle.id}/comments/${comment.id}/`,
         headers: {
-          Authorizaion: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
         })
-          .then((res) => {
-            console.log(res)
+          .then(() => {
+            this.$store.dispatch('deleteComment', comment.id)
           })
       // console.log(`${API_BASE_URL}${this.selectedArticle.id}/comments/${comment.id}/`)
     },
@@ -77,7 +78,17 @@ export default {
       })
         .then((res) => {
           console.log(res)
+          this.$store.dispatch('editComment', res.data)
         })
+      const normalcomment = document.querySelector(`#normalcomment${comment.id}`)
+      normalcomment.classList.add('commentformvisible')
+      normalcomment.classList.remove('commentformhidden')
+
+      const editcomment = document.querySelector(`#editcomment${comment.id}`)
+      editcomment.classList.add('commentformhidden')
+      editcomment.classList.remove('commentformvisible')
+    },
+    cancelEditComment(comment) {
       const normalcomment = document.querySelector(`#normalcomment${comment.id}`)
       normalcomment.classList.add('commentformvisible')
       normalcomment.classList.remove('commentformhidden')
