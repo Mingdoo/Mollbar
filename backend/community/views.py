@@ -13,7 +13,7 @@ def article_list(request):
     # 게시글 전체 목록 보기 (READ)
     # TODO: pagination 추가하기
     if request.method == 'GET':
-        articles = get_list_or_404(Article)
+        articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         
         return Response(serializer.data, status.HTTP_200_OK)
