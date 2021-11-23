@@ -95,7 +95,7 @@ def search(request):
     [request 예시]
     GET '{{BASE_URL}}/api/v1/movies/search/'
 
-    data: {
+    headers: {
         "query": "토이",
         "genre": 16,
         "min_rate": 7.8,
@@ -111,9 +111,9 @@ def search(request):
         },
     ]
     """
-    search_word = request.data.get('query', '').strip()
-    genre = request.data.get('genre', '')
-    min_rate = request.data.get('min_rate', 0)
+    search_word = request.headers.get('query', '').strip()
+    genre = request.headers.get('genre', '')
+    min_rate = request.headers.get('min_rate', 0)
 
     # 1. 검색어 필터링
     if search_word:
