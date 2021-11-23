@@ -260,6 +260,7 @@ export default {
   },
   mounted(){
     const likebtn = document.querySelector('#changeLikeBtn')
+    console.log(likebtn)
     console.log(this.$store.state.myWishList.includes(this.selectedMovie.id))
     if (this.$store.state.myWishList.includes(this.selectedMovie.id)) {
       likebtn.innerHTML = '<i class="fas fa-star"></i>'
