@@ -1,6 +1,5 @@
 <template>
-  <div class="d-flex justify-content-center">
-      
+  <div class="d-flex justify-content-center" id="cardBox">
     <div v-if="showScore">
         <b-card
         title="Results"
@@ -78,8 +77,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    data(){
+    data() {
         return {
             currentQuestion: 0,
             showScore: false,
@@ -88,221 +89,7 @@ export default {
             timer:null,
             startQuiz: false,
 
-            questions : 
-              [
-                  {
-                      "poster_path": "/5j2YVF7VouLG0Ze96SEsj4DnVQM.jpg",
-                      "options": [
-                          {
-                              "title": "신과함께-죄와 벌",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "범죄와의 전쟁: 나쁜놈들 전성시대",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "폰",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "어린 신부",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/ucRS5itC1Ea4kgg8h8QBlCo3qnG.jpg",
-                      "options": [
-                          {
-                              "title": "김복남 살인 사건의 전말",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "하울링",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "박쥐",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "사자",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/2MCy07o0FHQYjigKim5bHF78267.jpg",
-                      "options": [
-                          {
-                              "title": "악인전",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "미녀는 괴로워",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "끝까지 간다",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "북촌방향",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/pUwY1vftUyxJvae8bHq861o114T.jpg",
-                      "options": [
-                          {
-                              "title": "안시성",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "화산고",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "클래식",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "비열한 거리",
-                              "isCorrect": true
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/dOVLy8K0hBFsxW2whcuTDPWrdlZ.jpg",
-                      "options": [
-                          {
-                              "title": "똥파리",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "독전",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "살인자의 기억법",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "기억의 밤",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/pJKy1yvnKh8UjcuYeG3Rt35xHFA.jpg",
-                      "options": [
-                          {
-                              "title": "다른 나라에서",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "번 더 스테이지: 더 무비",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "터널",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "밀양",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/x7O15z9hChNj3W1504Iv5kjUUWi.jpg",
-                      "options": [
-                          {
-                              "title": "헨젤과 그레텔",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "싸이보그지만 괜찮아",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "고양이: 죽음을 보는 두개의 눈",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "82년생 김지영",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/hUgPWAyJ3GOoIVctVJJ6yqyaIpW.jpg",
-                      "options": [
-                          {
-                              "title": "국제시장",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "나의 PS 파트너",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "타워",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "어린 신부",
-                              "isCorrect": true
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/2MCy07o0FHQYjigKim5bHF78267.jpg",
-                      "options": [
-                          {
-                              "title": "끝까지 간다",
-                              "isCorrect": true
-                          },
-                          {
-                              "title": "더 테러 라이브",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "도어락",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "끝까지 간다",
-                              "isCorrect": false
-                          }
-                      ]
-                  },
-                  {
-                      "poster_path": "/yXnGO8s2aWyYenZVMbuco1W5cQk.jpg",
-                      "options": [
-                          {
-                              "title": "용서는 없다",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "숨바꼭질",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "관상",
-                              "isCorrect": false
-                          },
-                          {
-                              "title": "초능력자",
-                              "isCorrect": true
-                          }
-                      ]
-                  }
-              ],
-    
-
+            questions : [],
         }
     },
 
@@ -311,46 +98,48 @@ export default {
             this.startQuiz = true
             this.countDownTimer()
         },
-        handleAnswerClick(isCorrect){
+        handleAnswerClick(isCorrect) {
             clearTimeout(this.timer);
             let nextQuestion = this.currentQuestion + 1;
-            if(isCorrect){
+            if(isCorrect) {
                 this.score = this.score + 1;
             }
             if(nextQuestion < this.questions.length){
             this.currentQuestion = nextQuestion;
-            // this.$store.state.questionAttended = this.currentQuestion;
-            // localStorage.setItem('qattended', this.currentQuestion)
 
             this.countDown = 10;
             this.countDownTimer();
             }
-            else{
-                // localStorage.removeItem('qattended')
+            else {
                 this.showScore = true;
-                // localStorage.setItem('testComplete',this.showScore)
             }
-
         },
         countDownTimer() {
-                if(this.countDown > 0) {
-                    this.timer = setTimeout(() => {
-                        this.countDown -= 1
-                        this.countDownTimer()
-                    }, 1000)
-                }
-                else{
-                    this.handleAnswerClick(false)
-                }
+            if (this.countDown > 0) {
+                this.timer = setTimeout(() => {
+                    this.countDown -= 1
+                    this.countDownTimer()
+                }, 1000)
             }
-    },
-     created() {
-        //  alert(this.$store.state.questionAttended)
-        //    this.showScore = localStorage.getItem('testComplete') || false
-        //    this.currentQuestion = localStorage.getItem('qattended') || 0
-        //    this.countDownTimer()
-        //    this.fetchQuiz()
+            else {
+                this.handleAnswerClick(false)
+            }
         }
+    },
+    created() {
+        // quiz set을 가져온다.
+        axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/api/v1/community/kmovie_quiz/`,
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+        .then(res => {
+            this.questions = res.data
+            console.log(res.data)
+        })
+    }
     
 }
 </script>
@@ -399,16 +188,20 @@ export default {
 
 #poster-image {
   /* position: absolute; */
-  height: 100px;
+  height: 60px;
   width: 50%;
   background: no-repeat center center fixed;
   margin-top: 50px;
-  background-position-y: -10%;
+  background-position-y: 10%;
   overflow: hidden;
 }
 
 #question {
   margin-top: 100px;
+}
+
+#cardBox {
+    margin-top: 50px;
 }
 
 </style>
