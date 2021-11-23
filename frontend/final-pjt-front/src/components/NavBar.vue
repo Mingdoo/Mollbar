@@ -16,25 +16,28 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item" v-if="isLogin">
-            <router-link to="/" class="nav-link" aria-current="page">(로고)</router-link>
+            <router-link to="/" class="nav-link" aria-current="page">홈</router-link>
           </li>
           <li class="nav-item" v-if="isLogin">
-            <router-link to="/profile" class="nav-link">(프로필)</router-link>
+            <router-link to="/profile" class="nav-link">프로필</router-link>
+          </li>
+          <li class="nav-item" v-if="isLogin">
+            <router-link to="/quiz" class="nav-link">퀴즈</router-link>
           </li>
           <li class="nav-item" v-if="!isLogin">
-            <router-link to="/login" class="nav-link">(로그인)</router-link>
+            <router-link to="/login" class="nav-link">로그인</router-link>
           </li>
           <li class="nav-item" v-if="!isLogin">
-            <router-link to="/signup" class="nav-link">(회원가입)</router-link>
+            <router-link to="/signup" class="nav-link">회원가입</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/v404v" class="nav-link">(404)</router-link>
+            <router-link to="/v404v" class="nav-link">404</router-link>
           </li>
           <li class="nav-item" v-if="isLogin">
-            <a id="logoutlink" class="nav-link" @click="logOut" style="cursor:pointer;">(로그아웃)</a>
+            <a id="logoutlink" class="nav-link" @click="logOut" style="cursor:pointer;">로그아웃</a>
           </li>
           <li class="nav-item" v-if="isLogin">
-            <router-link to="/community" class="nav-link">(커뮤니티)</router-link>
+            <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
         <form class="d-flex">

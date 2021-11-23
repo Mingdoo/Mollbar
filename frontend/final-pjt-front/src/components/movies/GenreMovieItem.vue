@@ -12,7 +12,7 @@
 
 <script>
 import axios from 'axios'
-const BASE_URL = 'https://image.tmdb.org/t/p/w500'
+const BASE_URL = 'https://image.tmdb.org/t/p/w500/'
 
 export default {
   name: "GenreMovieItem",
@@ -22,7 +22,7 @@ export default {
   computed: {
     movieUrl: function() {
       return BASE_URL + this.movieByGenre.poster_path
-    }
+    },
   },
   methods: {
     movieDetail(selectedMovie){
@@ -60,7 +60,6 @@ export default {
   margin: 0px 20px;
   transition: 0.5s ease;
   /* z-index: 2; */
-  margin-top: 6%;
 }
 .carouselbox img:hover {
   transform: scale(1.2);

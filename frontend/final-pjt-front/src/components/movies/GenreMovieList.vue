@@ -5,17 +5,23 @@
         {{ this.genreName[this.genre] }} 영화는 어때요?
       </h2>
     </div>
-    <div class="container-carousel">
-      <button class="switchLeft sliderButton btn" @click="clickLeft"></button>
-      <div :id="`carousel${this.genre}`">
-        <genre-movie-item
-          v-for="movieByGenre in MovieList"
-          :key="movieByGenre.id"
-          :movie-by-genre="movieByGenre"
-        >
-        </genre-movie-item>
+    <div class="container-carousel row">
+      <div class="col-1">
+        <button class="switchLeft sliderButton btn" @click="clickLeft"></button>
       </div>
-      <button class="switchRight sliderButton btn" @click="clickRight"></button>
+      <div class="col-10">
+        <div :id="`carousel${this.genre}`">
+          <genre-movie-item
+            v-for="movieByGenre in MovieList"
+            :key="movieByGenre.id"
+            :movie-by-genre="movieByGenre"
+          >
+          </genre-movie-item>
+        </div>
+      </div>
+      <div class="col-1">
+        <button class="switchRight sliderButton btn" @click="clickRight"></button>
+      </div>
     </div>
   </div>
 </template>
@@ -90,20 +96,9 @@ export default {
 </script>
 
 <style>
-.carousel {
-  height: 250px;
-  width: 85%;
-  overflow-y: scroll;
-  white-space: nowrap;
-  overflow: hidden;
-  position: absolute;
-  transition: 0.5s ease;
-  display: inline-block;
-  /* margin-bottom: 10px; */
-}
 [id^="carousel"] {
-  height: 250px;
-  width: 85%;
+  height: 300px;
+  width: 100%;
   overflow-y: scroll;
   white-space: nowrap;
   overflow: hidden;
@@ -112,32 +107,8 @@ export default {
   display: inline-block;
   /* margin-bottom: 10px; */
 }
-.container-carousel .switchLeft,
-.container-carousel .switchRight {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  height: 250px;
-  width: 25px;
-  text-align: center;
-  background-color: lightgray;
-  font-family: sans-serif;
-  top: 0;
-  z-index: 3;
-}
+
 .sliderButton {
   display: inline-block;
-}
-
-.container-carousel .switchLeft{
-  position: relative;
-  left: -10px;
-  top: -100px
-}
-
-.container-carousel .switchRight{
-  position: relative;
-  right: -10px;
-  top: -100px
 }
 </style>

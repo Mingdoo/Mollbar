@@ -65,7 +65,6 @@ export default {
   margin: 0px 20px;
   transition: 0.5s ease;
   /* z-index: 2; */
-  margin-top: 6%;
 }
 .carouselbox img:hover {
   transform: scale(1.2);

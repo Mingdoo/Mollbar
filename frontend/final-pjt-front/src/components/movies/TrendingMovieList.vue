@@ -1,7 +1,9 @@
 <template>
-  <div class="container-carousel">
-    <button class="switchLeft sliderButton btn" @click="clickLeft"></button>
-    <div class="carousel">
+  <div class="container-carousel row">
+    <div class="col-1">
+      <button class="switchLeft sliderButton btn" @click="clickLeft"></button>
+    </div>
+    <div class="carousel col-10">
       <trending-movie-item
         v-for="trendingMovie in trendingMovieList"
         :key="trendingMovie.id"
@@ -9,7 +11,9 @@
       >
       </trending-movie-item>
     </div>
-    <button class="switchRight sliderButton btn" @click="clickRight"></button>
+    <div class="col-1">
+      <button class="switchRight sliderButton btn" @click="clickRight"></button>
+    </div>
   </div>
 </template>
 
@@ -55,29 +59,35 @@ export default {
 </script>
 
 <style>
+.container-carousel {
+  text-align: center;
+  align-items: center;
+}
+
 .carousel {
-  height: 250px;
-  width: 85%;
+  height: 300px;
+  width: 100%;
   overflow-y: scroll;
   white-space: nowrap;
   overflow: hidden;
   position: absolute;
   transition: 0.5s ease;
   display: inline-block;
-  /* margin-bottom: 10px; */
+  /* overflow: -moz-hidden-unscrollable; */
 }
+
 .container-carousel .switchLeft,
 .container-carousel .switchRight {
   color: white;
   font-weight: bold;
   text-decoration: none;
-  height: 250px;
+  height: 200px;
   width: 25px;
   text-align: center;
   background-color: lightgray;
   font-family: sans-serif;
-  top: 0;
   z-index: 3;
+  position: relative;
 }
 .sliderButton {
   display: inline-block;
@@ -86,12 +96,11 @@ export default {
 .container-carousel .switchLeft{
   position: relative;
   left: -10px;
-  top: -100px
 }
 
 .container-carousel .switchRight{
   position: relative;
   right: -10px;
-  top: -100px
+
 }
 </style>

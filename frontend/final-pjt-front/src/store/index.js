@@ -12,6 +12,7 @@ export default new Vuex.Store({
     selectedArticle: '',
     selectedArticleComments: [],
     popularByGenre: {},
+    userProfile: '',
     userId: null,
     isLogin: false,
     token: null,
@@ -78,6 +79,9 @@ export default new Vuex.Store({
     MY_WISH_LIST(state, data){
       state.myWishList = data.wishlist
       // console.log(state.myWishList)
+    },
+    USER_PROFILE(state, data) {
+      state.userProfile = data
     }
   },
   actions: {
@@ -114,6 +118,9 @@ export default new Vuex.Store({
     },
     myWishList({ commit }, data){
       commit('MY_WISH_LIST', data)
+    },
+    userProfile({ commit }, data) {
+      commit('USER_PROFILE', data)
     }
   },
   modules: {

@@ -9,6 +9,7 @@ import SignUp from '@/components/accounts/SignUp';
 import CommunityHome from '@/pages/CommunityHome'
 import ArticleCreationForm from '@/components/community/ArticleCreationForm';
 import ArticleDetail from '@/pages/ArticleDetail';
+import Quiz from '@/pages/Quiz';
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,11 @@ const routes = [
     path: '/community/:article_id',
     name: 'ArticleDetail',
     component: ArticleDetail
+  },
+  {
+    path: '/quiz',
+    name: 'Quiz',
+    component: Quiz
   },
   { path: "*", component: NotFound }
 ]

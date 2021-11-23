@@ -12,6 +12,12 @@
         {{ selectedMovie.overview }}
       </h5>
     </div>
+    <div class="col-12 np">
+      출연진 : 
+      <span v-for="actor in selectedMovie.actors" :key="actor">
+        {{ actor }},
+      </span>
+    </div>
     <div class="col-2 mt-5">
       <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
     </div>
