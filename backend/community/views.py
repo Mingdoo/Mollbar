@@ -136,7 +136,7 @@ def get_korean_movies(request):
     kmovies = Kmovie.objects.all()
     quiz_set = []
 
-    for i in range(0, 40, 4):
+    for i in range(0, 38, 4):
         movie1 = kmovies[i]
         movie2 = kmovies[i + 1]
         movie3 = kmovies[i + 2]
