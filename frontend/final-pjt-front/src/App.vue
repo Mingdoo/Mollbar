@@ -1,7 +1,9 @@
 <template>
-  <div id="app">
-    <nav-bar></nav-bar>
-    <div class="container">
+  <div id="app" class="d-flex flex-column h-100 bg-black">
+    <main class="flex-shrink-0">
+      <nav-bar></nav-bar>
+    </main>
+    <div class="">
       <router-view :key="$route.fullPath"></router-view>
     </div>
     <foo-ter></foo-ter>
@@ -42,9 +44,9 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
+  text-align: center;
   color: #2c3e50;
-  /* background-color: darkslategray; */
+  /* background-color: aquamarine; */
 }
 
 #nav {

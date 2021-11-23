@@ -1,7 +1,7 @@
 <template>
   <div class="container-carousel row">
     <div class="col-1">
-      <button class="switchLeft sliderButton btn" @click="clickLeft"></button>
+      <button class="switchLeft sliderButton btn" @click="clickLeft">&lt;</button>
     </div>
     <div class="carousel col-10">
       <trending-movie-item
@@ -12,7 +12,7 @@
       </trending-movie-item>
     </div>
     <div class="col-1">
-      <button class="switchRight sliderButton btn" @click="clickRight"></button>
+      <button class="switchRight sliderButton btn" @click="clickRight">&gt;</button>
     </div>
   </div>
 </template>
@@ -78,11 +78,12 @@ export default {
 
 .container-carousel .switchLeft,
 .container-carousel .switchRight {
-  color: white;
+  color: rgb(255, 255, 255);
   font-weight: bold;
   text-decoration: none;
-  height: 200px;
-  width: 25px;
+  height: 300px;
+  width: 40px;
+  font-size: 30px;
   text-align: center;
   background-color: lightgray;
   font-family: sans-serif;
@@ -101,6 +102,5 @@ export default {
 .container-carousel .switchRight{
   position: relative;
   right: -10px;
-
 }
 </style>

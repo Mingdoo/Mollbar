@@ -60,9 +60,9 @@ export default {
   position: relative;
 }
 .carouselbox img {
-  height: 75%;
+  height: 80%;
   background-size: contain;
-  margin: 0px 20px;
+  margin: 30px 20px;
   transition: 0.5s ease;
   /* z-index: 2; */
 }

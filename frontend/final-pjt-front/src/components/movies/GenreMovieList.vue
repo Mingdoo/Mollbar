@@ -7,7 +7,7 @@
     </div>
     <div class="container-carousel row">
       <div class="col-1">
-        <button class="switchLeft sliderButton btn" @click="clickLeft"></button>
+        <button class="switchLeft sliderButton btn" @click="clickLeft">&lt;</button>
       </div>
       <div class="col-10">
         <div :id="`carousel${this.genre}`">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="col-1">
-        <button class="switchRight sliderButton btn" @click="clickRight"></button>
+        <button class="switchRight sliderButton btn" @click="clickRight">&gt;</button>
       </div>
     </div>
   </div>
