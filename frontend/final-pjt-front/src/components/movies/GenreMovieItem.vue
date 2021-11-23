@@ -1,6 +1,5 @@
 <template>
   <!-- <div>
-    {{ movieByGenre }}
   </div> -->
   <div class="carouselbox" @click="movieDetail(movieByGenre)" style="display: inline;">
     <router-link :to="`/movies/${movieByGenre.id}`">
@@ -20,7 +19,7 @@ export default {
     movieByGenre: Object
   },
   computed: {
-    movieUrl: function() {
+    movieUrl() {
       return BASE_URL + this.movieByGenre.poster_path
     },
   },

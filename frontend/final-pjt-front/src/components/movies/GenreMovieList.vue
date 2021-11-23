@@ -10,9 +10,9 @@
         <button class="switchLeft sliderButton btn" @click="clickLeft">&lt;</button>
       </div>
       <div class="col-10">
-        <div :id="`carousel${this.genre}`">
+        <div :id="`carousel${this.genre}`" v-if="this.movieList.length > 0">
           <genre-movie-item
-            v-for="movieByGenre in MovieList"
+            v-for="movieByGenre in movieList"
             :key="movieByGenre.id"
             :movie-by-genre="movieByGenre"
           >
@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+      movieList: [],
       scrollAmount: 0,
       scrollPerclick: 200,
       genreName : {
@@ -68,21 +69,14 @@ export default {
   components: {
     GenreMovieItem
   },
-  computed: {
-    MovieList() {
-      return _.shuffle(this.$store.state.popularByGenre[this.genre])
-    }
-  },
   methods: {
     clickLeft() {
-      console.log($(`#carousel${this.genre}`))
       $(`#carousel${this.genre}`).animate({
           scrollLeft: (this.scrollAmount -= this.scrollPerclick)
         }, 400);
       this.scrollAmount -= this.scrollPerclick
     },
     clickRight() {
-      console.log(this.genre)
       const sliders = document.querySelector(`#carousel${this.genre}`)
       this.scrollAmount += this.scrollPerclick
       if (this.scrollAmount <= sliders.scrollWidth - sliders.clientWidth){
@@ -91,6 +85,16 @@ export default {
           }, 400);
         }
     },
+  },
+  // computed: {
+  //   movieList() {
+  //     return _.shuffle(this.$store.state.popularByGenre[this.genre])
+  //   }
+  // },
+  mounted() {
+    setTimeout(() => {
+      this.movieList = _.shuffle(this.$store.state.popularByGenre[this.genre])
+    }, 1500)
   }
 }
 </script>
