@@ -35,7 +35,7 @@ export default {};
   }
 
   #description {
-    padding-left: 3%;
+    padding-left: 2%;
     /* font-size: 2rem; */
   }
 

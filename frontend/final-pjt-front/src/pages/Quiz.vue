@@ -137,8 +137,8 @@ export default {
         })
         .then(res => {
             this.questions = res.data
-            console.log(res.data)
         })
+        .catch(err => console.log(err))
     }
     
 }
