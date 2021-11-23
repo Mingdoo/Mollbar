@@ -19,10 +19,10 @@
       </span>
     </div>
     <div class="col-2 mt-5">
-      <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
+      <button @click="changeLike(selectedMovie)" id="changeLikeBtn" v-if="isLogin"></button>
     </div>
     <div class="col-10">
-      <div>
+      <div v-if="isLogin">
         <input type="number" name="" id="userRating" min="1" max="10" required>
         <input type="text" name="" id="userReview">
         <button class="btn btn-primary" @click="updateMovieRating(selectedMovie)">Submit</button>
@@ -59,6 +59,9 @@ export default {
     selectedMovie() {
       return this.$store.state.selectedMovie
     },
+    isLogin() {
+      return this.$store.state.isLogin
+    }
   },
   methods: {
     updateMovieRating(movie) {
@@ -165,10 +168,12 @@ export default {
             console.log(err)
           })
           const likebtn = document.querySelector('#changeLikeBtn')
-          if (likebtn.innerText === 'like') {
-            likebtn.innerText = 'dislike'
-          } else {
-            likebtn.innerText = 'like'
+          if (likebtn) {
+            if (likebtn.innerText === 'like') {
+              likebtn.innerText = 'dislike'
+            } else {
+              likebtn.innerText = 'like'
+            }
           }
           console.log(res)
         })
@@ -176,6 +181,7 @@ export default {
   },
   mounted(){
     const likebtn = document.querySelector('#changeLikeBtn')
+    console.log(likebtn)
     console.log(this.$store.state.myWishList.includes(this.selectedMovie.id))
     if (this.$store.state.myWishList.includes(this.selectedMovie.id)) {
       likebtn.innerText = 'dislike'
