@@ -1,6 +1,6 @@
 <template>
   <div class="container-carousel row">
-    <h2 class="np text-white" style="cursor:pointer;">
+    <h2 class="np text-white" style="cursor:pointer;" @click="searchMovie">
       이번주 박스오피스 영화는 어때요?
     </h2>
     <div class="col-1" @click="clickLeft" style="cursor:pointer;">
@@ -23,6 +23,9 @@
 <script>
 import TrendingMovieItem from '@/components/movies/TrendingMovieItem'
 import $ from 'jquery';
+import axios from 'axios';
+const API_SEARCH_URL = 'http://127.0.0.1:8000/api/v1/movies/search/'
+
 
 export default {
   name: 'MovieList',
@@ -52,6 +55,28 @@ export default {
           }, 400);
         }
     },
+    searchMovie() {
+      axios({
+        method: 'get',
+        url: API_SEARCH_URL,
+        params: {
+        }
+      })
+        .then((res) => {
+          this.$store.dispatch('searchMovie', res.data)
+        })
+        .then(() => {
+          this.$router.push({name: "Search"})
+          setTimeout(() => {
+            $('html, body').animate({
+              scrollTop : 0
+            }, 400);
+          }, 500)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   computed: {
     trendingMovieList() {
