@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="np text-white" style="cursor:pointer;">
-      <span class="text-white h2 text-decoration-none" @click="searchMovie">
+      <p class="text-white h2 text-decoration-none" @click="searchMovie">
         {{ this.genreName[this.genre] }} 장르는 어때요?
-      </span>
+      </p>
     </div>
     <div class="container-carousel row">
       <div class="col-1" style="cursor:pointer;" @click="clickLeft">
