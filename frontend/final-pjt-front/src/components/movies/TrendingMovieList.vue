@@ -1,7 +1,7 @@
 <template>
   <div class="container-carousel row">
-    <div class="col-1">
-      <button class="switchLeft sliderButton btn" @click="clickLeft">&lt;</button>
+    <div class="col-1" @click="clickLeft" style="cursor:pointer;">
+      <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 40px;"></i>
     </div>
     <div class="carousel col-10">
       <trending-movie-item
@@ -11,8 +11,8 @@
       >
       </trending-movie-item>
     </div>
-    <div class="col-1">
-      <button class="switchRight sliderButton btn" @click="clickRight">&gt;</button>
+    <div class="col-1" @click="clickRight" style="cursor:pointer;">
+      <i class="fa fa-chevron-right" aria-hidden="true" style="font-size: 40px;"></i>
     </div>
   </div>
 </template>

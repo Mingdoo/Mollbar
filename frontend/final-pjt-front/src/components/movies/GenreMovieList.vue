@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <h2>
+      <h2 class="np">
         {{ this.genreName[this.genre] }} 영화는 어때요?
       </h2>
     </div>
     <div class="container-carousel row">
-      <div class="col-1">
-        <button class="switchLeft sliderButton btn" @click="clickLeft">&lt;</button>
+      <div class="col-1" style="cursor:pointer;" @click="clickLeft">
+        <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 40px;"></i>
       </div>
       <div class="col-10">
         <div :id="`carousel${this.genre}`" v-if="this.movieList.length > 0">
@@ -19,8 +19,8 @@
           </genre-movie-item>
         </div>
       </div>
-      <div class="col-1">
-        <button class="switchRight sliderButton btn" @click="clickRight">&gt;</button>
+      <div class="col-1" @click="clickRight" style="cursor:pointer;">
+        <i class="fa fa-chevron-right" aria-hidden="true" style="font-size: 40px;"></i>
       </div>
     </div>
   </div>
