@@ -3,15 +3,15 @@
     <header class="bg-black py-5">
       <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center">
+          <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img alt="Vue logo" src="../assets/logo_transparent.png" class="img-fluid rounded-3 my-5"></div>
           <div class="col-lg-8 col-xl-7 col-xxl-6">
             <div class="my-5 text-center text-xl-start">
-              <h1 class="display-5 fw-bolder text-white mb-2">A Bootstrap 5 template for modern businesses</h1>
-              <p class="lead fw-normal text-white-50 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores neque alias sapiente reprehenderit corrupti quam perspiciatis est facere? Quae eligendi culpa vero expedita voluptatem molestias, tenetur fugit accusantium aspernatur non?</p>
+              <h1 class="display-5 fw-bolder text-white mb-2 hometitle">우리.. 영화볼래요?</h1>
+              <p class="lead fw-normal text-white-50 mb-4">영화는 많고 뭘 봐야할지 모르겠다면, <b class="h4">몰봐</b>로 오세요! 재미있고 즐거운 영화 정보가 가득! 장르별 영화, 검색은 기본! 재미는 2배 기쁨은 5배!</p>
               <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
               </div>
             </div>
           </div>
-          <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img alt="Vue logo" src="../assets/logo.png" class="img-fluid rounded-3 my-5"></div>
         </div>
       </div>
     </header>
@@ -26,8 +26,9 @@
 import TrendingMovieList from '@/components/movies/TrendingMovieList'
 import GenreMovieList from '@/components/movies/GenreMovieList';
 import axios from 'axios'
+import _ from 'lodash'
 const API_KEY = process.env.VUE_APP_API_KEY
-const genres = [12, 14, 16, 18, 27, 28, 35, 36, 37, 53, 80, 99, 878, 9648, 10402, 10749, 10751, 10752, 10770]
+const genres = _.shuffle([12, 14, 16, 18, 27, 28, 35, 36, 37, 53, 80, 99, 878, 9648, 10402, 10749, 10751, 10752, 10770])
 
 export default {
   name: 'Home',
@@ -61,3 +62,18 @@ export default {
     }
   }
 </script>
+
+<style>
+.hometitle:after {
+  content: "   ❤";
+  visibility: hidden;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear, font 0.05s linear;
+  color: red;
+  font-size: 0;
+}
+
+.hometitle:hover:after {
+  visibility: visible;
+  font-size: 30px;
+}
+</style>

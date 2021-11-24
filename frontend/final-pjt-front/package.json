@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "node-sass": "^4.14.1",
     "sass-loader": "^7.3.1",
+    "sweetalert2": "^11.2.0",
     "vue": "^2.6.14",
     "vue-progress-path": "0.0.2",
     "vue-router": "^3.2.0",

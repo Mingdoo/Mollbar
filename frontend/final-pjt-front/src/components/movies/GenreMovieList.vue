@@ -2,7 +2,7 @@
   <div>
     <div class="np text-white" style="cursor:pointer;">
       <span class="text-white h2 text-decoration-none" @click="searchMovie">
-        {{ this.genreName[this.genre] }} 영화는 어때요?
+        {{ this.genreName[this.genre] }} 장르는 어때요?
       </span>
     </div>
     <div class="container-carousel row">
@@ -99,7 +99,12 @@ export default {
           this.$store.dispatch('searchMovie', res.data)
         })
         .then(() => {
-          this.$router.push({name: "Search"})
+          this.$router.push({name: "Search", params: { genre: this.genre }})
+          setTimeout(() => {
+            $('html, body').animate({
+              scrollTop : 0
+            }, 400);
+          }, 500)
         })
         .catch((err) => {
           console.log(err)

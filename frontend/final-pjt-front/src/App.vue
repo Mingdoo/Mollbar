@@ -3,9 +3,12 @@
     <main class="flex-shrink-0">
       <nav-bar></nav-bar>
     </main>
-    <div class="">
+    <transition
+      name="fade"
+      mode="out-in"
+    >
       <router-view :key="$route.fullPath"></router-view>
-    </div>
+    </transition>
     <foo-ter></foo-ter>
   </div>
 </template>
@@ -44,5 +47,17 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
 }
 </style>

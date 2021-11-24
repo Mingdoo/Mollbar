@@ -1,28 +1,25 @@
 <template>
-  <div class="col-md-3">
-      <div class="card p-3 mb-2">
-          <div class="d-flex justify-content-between">
-              <div class="d-flex flex-row align-items-center">
-                  <div class="icon"> <i class=""></i> </div>
-                  <div class="ms-2 c-details">
-                      <h6 class="mb-0"></h6>
-                  </div>
-              </div>
-              <div class="badge"> <span> <b>{{ searchResult.vote_avg }}</b></span> </div>
+  <div class="col-lg-4 col-xl-3 my-5">
+      <div class="card p-3 mb-2 bg-dark">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row align-items-center">
+            <div class="icon"> <button @click="changeLike(searchResult)" id="changeLikeBtn"></button> </div>
           </div>
+          <div class="badge"> <span> <b>{{ searchResult.vote_avg }}</b></span> </div>
+        </div>
+        <div class="mt-5">
+          <h5 class="heading text-white np" @click="movieDetail(searchResult)">{{ searchResult.title }}<br>
+            <router-link :to="`/movies/${searchResult.id}`">
+              <img :src="movieUrl" alt="" class="w-75 cardimage">
+            </router-link>
+          </h5>
           <div class="mt-5">
-            <h3 class="heading" @click="movieDetail(searchResult)">{{ searchResult.title }}<br>
-              <router-link :to="`/movies/${searchResult.id}`">
-                <img :src="movieUrl" alt="" class="w-100">
-              </router-link>
-            </h3>
-            <div class="mt-5">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="mt-3"> <span class="text1">32 Applied <span class="text2">of 50 capacity</span></span> </div>
-              </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="mt-3"> <span class="text-white">32 Applied <span class="text2">of 50 capacity</span></span> </div>
           </div>
+        </div>
       </div>
   </div>
 
@@ -40,7 +37,10 @@ export default {
   computed: {
     movieUrl() {
       return BASE_URL + this.searchResult.poster_path
-    }
+    },
+    // isLiked() {
+    //   return this.$store.state.myWishList.includes(this.searchResult.id)
+    // }
   },
   methods: {
     movieDetail(selectedMovie){
@@ -57,6 +57,19 @@ export default {
         console.log(err)
       })
     },
+    changeLike(movie) {
+      console.log(movie)
+    }
+  },
+  mounted() {
+    const likebtn = document.querySelector('#changeLikeBtn')
+    // console.log(likebtn)
+    // console.log(this.$store.state.myWishList.includes(this.searchResult.id))
+    if (this.$store.state.myWishList.includes(this.searchResult.id)) {
+      likebtn.innerHTML = '<i class="fa fas fa-star"></i>'
+      } else {
+      likebtn.innerHTML = '<i class="fa far fa-star"></i>'
+    }
   }
 }
 </script>
@@ -64,7 +77,8 @@ export default {
 <style>
 .card {
     border: none;
-    border-radius: 10px
+    border-radius: 10px;
+    height: 100%;
 }
 
 .c-details span {
@@ -84,13 +98,13 @@ export default {
 }
 
 .badge span {
-    background-color: #fffbec;
+    background-color: #2c2b27;
     width: 60px;
-    height: 25px;
+    height: 30px;
     padding-bottom: 3px;
     border-radius: 5px;
     display: flex;
-    color: #fed85d;
+    color: crimson;
     justify-content: center;
     align-items: center
 }
@@ -111,5 +125,18 @@ export default {
 
 .text2 {
     color: #a5aec0
+}
+
+.cardimage {
+  height: 80%;
+  background-size: contain;
+  margin: 30px 20px;
+  transition: 0.5s ease;
+  /* z-index: 2; */
+}
+
+.cardimage:hover {
+  transform: scale(1.5);
+  z-index: 5;
 }
 </style>
