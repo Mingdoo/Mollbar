@@ -8,14 +8,32 @@
       <b-button variant="secondary">Home</b-button>
     </router-link>
     <router-link to="/movies/694" class="navbar-brand button">
-      <b-button variant="secondary">샤이닝(1980) 더 알아보기</b-button>
+      <b-button variant="secondary" @click="movieDetail">샤이닝(1980) 더 알아보기</b-button>
     </router-link>
     <div></div>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from 'axios';
+
+export default {
+  name: "NotFound",
+  methods: {
+    movieDetail() {
+      axios({
+        method:'get',
+        url: `http://127.0.0.1:8000/api/v1/movies/694`
+      })
+      .then((res) => {
+        console.log(res)
+        this.$store.dispatch('movieDetail', res.data[0])
+        this.$router.push({ name: 'MovieDetail' }).catch(() => {})
+        // console.log(res)
+      })
+    }
+  }
+};
 </script>
 
 <style scoped>

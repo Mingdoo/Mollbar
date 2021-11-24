@@ -2,17 +2,17 @@
   <div class="home">
     <header class="bg-black py-5">
       <div class="container px-5">
-          <div class="row gx-5 align-items-center justify-content-center">
-              <div class="col-lg-8 col-xl-7 col-xxl-6">
-                  <div class="my-5 text-center text-xl-start">
-                      <h1 class="display-5 fw-bolder text-white mb-2">A Bootstrap 5 template for modern businesses</h1>
-                      <p class="lead fw-normal text-white-50 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores neque alias sapiente reprehenderit corrupti quam perspiciatis est facere? Quae eligendi culpa vero expedita voluptatem molestias, tenetur fugit accusantium aspernatur non?</p>
-                      <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                      </div>
-                  </div>
+        <div class="row gx-5 align-items-center justify-content-center">
+          <div class="col-lg-8 col-xl-7 col-xxl-6">
+            <div class="my-5 text-center text-xl-start">
+              <h1 class="display-5 fw-bolder text-white mb-2">A Bootstrap 5 template for modern businesses</h1>
+              <p class="lead fw-normal text-white-50 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores neque alias sapiente reprehenderit corrupti quam perspiciatis est facere? Quae eligendi culpa vero expedita voluptatem molestias, tenetur fugit accusantium aspernatur non?</p>
+              <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
               </div>
-              <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img alt="Vue logo" src="../assets/logo.png" class="img-fluid rounded-3 my-5"></div>
+            </div>
           </div>
+          <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img alt="Vue logo" src="../assets/logo.png" class="img-fluid rounded-3 my-5"></div>
+        </div>
       </div>
     </header>
     
@@ -41,22 +41,8 @@ export default {
       genres,
     }
   },
-  mounted: function() {
+  created: function() {
     // axios 요청을 통한 데이터 받아오기.
-    axios({
-      method: 'get',
-      url: 'https://api.themoviedb.org/3/trending/movie/week',
-      params: {
-        api_key: API_KEY,
-        language: 'ko-KR'
-      }
-    })
-    .then((res) => {
-      this.$store.state.trendingMovieList = res.data.results
-    })
-    .catch((err) => {
-      console.log(err)
-    })
 
     genres.forEach((genre) => {
       axios({
@@ -69,10 +55,27 @@ export default {
             genre: genre,
             data: res.data
           })
+          setTimeout(() => {
+
+          },100)
         })
         .catch((err) => {
           console.log(err)
         })
+      })
+      axios({
+        method: 'get',
+        url: 'https://api.themoviedb.org/3/trending/movie/week',
+        params: {
+          api_key: API_KEY,
+          language: 'ko-KR'
+        }
+      })
+      .then((res) => {
+        this.$store.state.trendingMovieList = res.data.results
+      })
+      .catch((err) => {
+        console.log(err)
       })
     }
   }
