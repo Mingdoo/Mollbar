@@ -110,28 +110,19 @@ def change_password(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# 프로필 수정 넣을지 뺄지 결정하기
-@api_view(['GET', 'PUT'])
+@api_view(['GET'])
 def profile(request, user_id):
+    # profile 페이지는 자기 자신만 볼 수 있도록 설정함.
+    if request.user.id != user_id:
+        return Response(
+            {'message': '프로필 페이지는 자기 자신만 열람 가능합니다.'},
+            status=status.status.HTTP_400_BAD_REQUEST
+        )
+
     user = get_object_or_404(get_user_model(), id=user_id)
 
-    # 프로필 정보 가져오기
-    if request.method == 'GET':
-        serializer = ProfileSerializer(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    # 프로필 정보 수정하기
-    # else:
-    #     if request.user.id != user_id:
-    #         Response(
-    #             {'message': '다른 사람의 프로필은 수정할 수 없습니다.'},
-    #             status=status.HTTP_400_BAD_REQUEST
-    #         )
-
-    #     serializer = ProfileSerializer(user, data=request.data)
-
-    #     if serializer.is_valid(raise_exception=True):
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    serializer = ProfileSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -146,20 +137,9 @@ def get_wishlist(request):
 
 @api_view(['DELETE'])
 def signout(request):
-    """
-    안내 사항에 동의함을 체크한 뒤, 버튼을 누르면 회원 탈퇴가 된다.
-    해당 유저의 영화 평가, 게시글/댓글, 찜한 목록 등도 모두 삭제된다.
-    """
-    if request.data['is_checked']:
-        request.user.delete()
+    request.user.delete()
 
-        return Response(
-            {"message": "회원 탈퇴가 완료되었습니다."},
-            status=status.HTTP_204_NO_CONTENT
-        )
-
-    else:
-        return Response(
-            {"message": "안내 사항에 동의해야만 회원 탈퇴가 가능합니다."},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+    return Response(
+        {"message": "회원 탈퇴가 완료되었습니다."},
+        status=status.HTTP_204_NO_CONTENT
+    )
