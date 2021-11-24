@@ -20,22 +20,6 @@ export default {
     NavBar,
     FooTer,
   },
-  // data() {
-  //   return {
-  //   }
-  // },
-  // created() {
-  //   const token = localStorage.getItem('jwt')
-  //   if (token) {
-  //     thi
-  //   }
-  // },
-  // updated() {
-  //   const token = localStorage.getItem('jwt')
-  //   if (token) {
-  //     this.isLogin = true
-  //   }
-  // }
 }
 </script>
 

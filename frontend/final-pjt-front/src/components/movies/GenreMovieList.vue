@@ -1,16 +1,14 @@
 <template>
   <div>
-    <div>
-      <h2 class="np">
-        {{ this.genreName[this.genre] }} 영화는 어때요?
-      </h2>
+    <div class="np text-white h2" style="cursor:pointer;">
+      {{ this.genreName[this.genre] }} 영화는 어때요?
     </div>
     <div class="container-carousel row">
       <div class="col-1" style="cursor:pointer;" @click="clickLeft">
         <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 40px;"></i>
       </div>
-      <div class="col-10">
-        <div :id="`carousel${this.genre}`" v-if="this.movieList.length > 0">
+      <div class="col-10" v-if="movieList">
+        <div :id="`carousel${this.genre}`">
           <genre-movie-item
             v-for="movieByGenre in movieList"
             :key="movieByGenre.id"
@@ -27,7 +25,7 @@
 </template>
 
 <script>
-import _ from 'lodash';
+// import _ from 'lodash';
 import GenreMovieItem from '@/components/movies/GenreMovieItem';
 import $ from 'jquery';
 
@@ -40,7 +38,7 @@ export default {
   },
   data() {
     return {
-      movieList: [],
+      // movieList: [],
       scrollAmount: 0,
       scrollPerclick: 200,
       genreName : {
@@ -86,16 +84,18 @@ export default {
         }
     },
   },
-  // computed: {
-  //   movieList() {
-  //     return _.shuffle(this.$store.state.popularByGenre[this.genre])
-  //   }
-  // },
-  mounted() {
-    setTimeout(() => {
-      this.movieList = _.shuffle(this.$store.state.popularByGenre[this.genre])
-    }, 1500)
-  }
+  computed: {
+    movieList() {
+      // console.log(this.$store.state.popularByGenre)
+      // console.log('!!!!!!!!!!!!!!!')
+      return this.$store.state.popularByGenre[this.genre]
+    }
+  },
+  // mounted() {
+  //   setTimeout(() => {
+  //     this.movieList = _.shuffle(this.$store.state.popularByGenre[this.genre])
+  //   }, 1500)
+  // }
 }
 </script>
 
@@ -114,5 +114,21 @@ export default {
 
 .sliderButton {
   display: inline-block;
+}
+
+.h2:after {
+  content: "더 알아보기";
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear, font 0.05s linear;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 0;
+  color: crimson;
+}
+
+.h2:hover:after {
+  visibility: visible;
+  opacity:1;
+  transition-delay:0s;
+  font-size: 20px;
 }
 </style>

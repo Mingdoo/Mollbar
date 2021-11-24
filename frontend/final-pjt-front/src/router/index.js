@@ -10,6 +10,7 @@ import CommunityHome from '@/pages/CommunityHome'
 import ArticleCreationForm from '@/components/community/ArticleCreationForm';
 import ArticleDetail from '@/pages/ArticleDetail';
 import Quiz from '@/pages/Quiz';
+import Search from '@/pages/Search';
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,7 @@ const routes = [
     name: 'Home',
     component: Home
   },
+
   // accounts
   {
     path: '/profile',
@@ -36,17 +38,25 @@ const routes = [
     name: 'Login',
     component: Login
   },
+
   // movies
   {
     path: '/movies/:movie_id',
     name: 'MovieDetail',
     component: MovieDetail
   },
-  // {
-  //   path: '/detail',
-  //   name: 'MovieDetail',
-  //   component: MovieDetail
-  // },
+  {
+    path: '/quiz',
+    name: 'Quiz',
+    component: Quiz
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search
+  },
+
+  //community
   {
     path: '/community',
     name: 'CommunityHome',
@@ -61,11 +71,6 @@ const routes = [
     path: '/community/:article_id',
     name: 'ArticleDetail',
     component: ArticleDetail
-  },
-  {
-    path: '/quiz',
-    name: 'Quiz',
-    component: Quiz
   },
   { path: "*", component: NotFound }
 ]

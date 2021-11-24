@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info" class="bg-black">
-      <router-link to="/" class="navbar-brand">
+      <router-link to="/" class="navbar-brand mx-5">
         <img src="../../src/assets/logo_transparent.png" alt="" style="width: 50px;">
       </router-link>
 
@@ -13,7 +13,6 @@
           <li class="nav-item" v-if="isLogin"><router-link to="/quiz" class="nav-link">퀴즈</router-link></li>
           <li class="nav-item" v-if="!isLogin"><router-link to="/login" class="nav-link">로그인</router-link></li>
           <li class="nav-item" v-if="!isLogin"><router-link to="/signup" class="nav-link">회원가입</router-link></li>
-          <li class="nav-item"><router-link to="/v404v" class="nav-link">404</router-link></li>
           <li class="nav-item" v-if="isLogin"><router-link to="/community" class="nav-link">커뮤니티</router-link></li>
           
           
@@ -33,10 +32,10 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <div class="d-flex mx-5">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="userSearchInput" @keyup.enter="searchMovie">
+            <button class="btn btn-outline-secondary" type="submit" @click="searchMovie">Search</button>
+          </div>
 
         </b-navbar-nav>
       </b-collapse>
@@ -45,11 +44,14 @@
 </template>
 
 <script>
+import axios from 'axios'
+const API_SEARCH_URL = 'http://127.0.0.1:8000/api/v1/movies/search/'
+
 export default {
   name: "NavBar",
   data() {
     return {
-      // isLogin: this.$store.state.isLogin
+      userSearchInput: '',
     }
   },
   methods: {
@@ -58,6 +60,21 @@ export default {
       // this.isLogin = false
       this.$store.dispatch('changeLogged')
       this.$router.push({name: 'Login'})
+    },
+    searchMovie() {
+      axios({
+        method: 'get',
+        url: API_SEARCH_URL,
+        headers: {
+          query: this.userSearchInput,
+        }
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   created() {

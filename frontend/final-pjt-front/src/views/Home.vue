@@ -41,42 +41,23 @@ export default {
       genres,
     }
   },
-  created: function() {
+  beforeCreate: function() {
     // axios 요청을 통한 데이터 받아오기.
-
-    genres.forEach((genre) => {
-      axios({
-        method: 'get',
-        url: `http://127.0.0.1:8000/api/v1/movies/genre-popular/${genre}/`,
-      })
-        .then((res) => {
-          this.$store.state.popularByGenre[genre] = res.data
-          this.$store.dispatch('popularByGenre', {
-            genre: genre,
-            data: res.data
-          })
-          setTimeout(() => {
-
-          },100)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      })
-      axios({
-        method: 'get',
-        url: 'https://api.themoviedb.org/3/trending/movie/week',
-        params: {
-          api_key: API_KEY,
-          language: 'ko-KR'
-        }
-      })
-      .then((res) => {
-        this.$store.state.trendingMovieList = res.data.results
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    this.$store.dispatch('popularByGenre')
+    axios({
+      method: 'get',
+      url: 'https://api.themoviedb.org/3/trending/movie/week',
+      params: {
+        api_key: API_KEY,
+        language: 'ko-KR'
+      }
+    })
+    .then((res) => {
+      this.$store.state.trendingMovieList = res.data.results
+    })
+    .catch((err) => {
+      console.log(err)
+    })
     }
   }
 </script>

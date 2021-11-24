@@ -1,5 +1,8 @@
 <template>
   <div class="container-carousel row">
+    <h2 class="np text-white" style="cursor:pointer;">
+      이번주 박스오피스 영화는 어때요?
+    </h2>
     <div class="col-1" @click="clickLeft" style="cursor:pointer;">
       <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 40px;"></i>
     </div>
