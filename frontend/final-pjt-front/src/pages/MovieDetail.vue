@@ -10,7 +10,7 @@
         <img :src="`https://image.tmdb.org/t/p/w500/${selectedMovie.poster_path}`" alt="">
       </div>
 
-      <div v-if="selectedMovie.video_url" :selectedMovie="selectedMovie" class="col-5 offset-1 np">
+      <div v-if="selectedMovie.video_url" :selectedMovie="selectedMovie" class="col-5 offset-1 np pb-4">
         <!-- 필요한 정보 : 제목 / 줄거리 / 배우 / 개봉 날짜 / 점수 -->
         <h1 class="vertical-line bold">
           {{ selectedMovie.title }}
@@ -61,7 +61,7 @@
         </p>
       </div>
       <!-- video url이 없는 경우 -->
-      <div v-else class="col-5 offset-1 np">  
+      <div v-else class="col-5 offset-1 np pb-4">  
         <h1 class="vertical-line bold">
           {{ selectedMovie.title }}
         </h1>
@@ -103,29 +103,41 @@
         </p>
       </div>
 
-      <!-- <div class="col-2 mt-5">
-        <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
-      </div> -->
-      <div class="col-10">
-        <star-rating
+      <br><hr><br>
+
+      <!-- 평가 입력창 -->
+      <div class="row">
+        <star-rating class="col-3"
           :increment="0.5"
           :glow="3"
           :clearable=true
-          @rating-selected ="setRating"
+          :show-rating="false"
+          @rating-selected="setRating"
+          v-model="starRating"  
         >
         </star-rating>
-        <div>
-          <input type="number" name="" id="userRating" :starRating="starRating" min="1" max="10" required>
-          <input type="text" name="" id="userReview">
-          <button class="btn btn-primary" @click="updateMovieRating(selectedMovie)">Submit</button>
-        </div>
+        <!-- <input type="number" name="" id="userRating" :starRating="starRating" min="1" max="10" required> -->
+        <input type="text" class="col-7" id="userReview" v-model="reviewComment" @keyup.enter="updateMovieRating(selectMovie)">
+        <button 
+          class="btn btn-outline-success col-1 offset-1 white"
+          style="font-size: 18px;"
+          @click="updateMovieRating(selectedMovie)"
+          v-if="this.starRating && this.reviewComment"
+        >
+          등록
+        </button>
       </div>
+      
+      
 
       <!-- 평가 목록 -->
-      <table class="table">
+      <table class="table table-borderless mt-4">
         <tbody>
-          <tr v-for="rating in selectedMovie.ratings" :key="rating.id">
-            <td>{{rating.username}}</td>
+          <tr v-for="rating in selectedMovie.ratings" :key="rating.id" style="overflow: hidden; vertical-align: middle;">
+            <td style="margin-left: 0;" class="white">
+              <!-- TODO: 해당 유저의 프로필로 이동하기 -->
+              {{rating.username}}
+            </td>
             <td>
               <star-rating
                 :increment="0.5"
@@ -133,18 +145,35 @@
                 :rating="rating.rate / 2"
                 :show-rating="false"
                 :read-only="true"
-
+                color="#ff0000"
               >
               </star-rating>  
             </td>
-            <td>{{rating.review}}</td>
-            <button class="btn btn-primary" v-if="rating.user === $store.state.userId" @click="editMovieRating(rating)">수정</button>
-            <button class="btn btn-warning" v-if="rating.user === $store.state.userId" @click="deleteMovieRating(rating)">삭제</button>
+            <td colspan="4" class="d-flex justify-content-between">
+              <div style="max-width: 85%; transform: translateY(6%)" class="white">{{rating.review}}</div>
+              <div v-if="rating.user === $store.state.userId" class="np">
+                <!-- <button class="btn pt-0 pb-0 mt-0 mb-0" style="color: #444444;" @click="editMovieRating(rating)">수정</button> -->
+                <button class="btn pt-0 pb-0 mt-0 mb-0" style="color: #ff0000; font-size: 18px;" @click="deleteMovieRating(rating)">
+                  <i class="far fa-trash-alt h5 mb-0"></i>
+                </button>
+              </div>
+            </td>
+
+            <!-- <td v-if="rating.user === $store.state.userId">
+              <button class="btn btn-secondary" @click="editMovieRating(rating)">수정</button>
+              <button class="btn btn-danger" @click="deleteMovieRating(rating)">삭제</button>
+            </td> -->
           </tr>
         </tbody>
       </table>
 
-      <div v-for="rating in selectedMovie.ratings" :key="rating.id" class="row">
+      <div class="d-none" v-for="rating in selectedMovie.ratings" :key="rating.id" :id="`hiddenReview${rating.id}`">
+        <input type="number" name="" :id="`updateRating${rating.id}`" min="1" max="10" :value="rating.rate" required>
+        <input type="text" name="" :id="`updateReview${rating.id}`" :value="rating.review">
+        <button class="btn" v-if="rating.user === $store.state.userId" @click="confirmEdittingMovieRating(rating)">확인</button>
+      </div>
+
+      <!-- <div v-for="rating in selectedMovie.ratings" :key="rating.id" class="row">
         <div class="d-visible col-10" :id="`normalReview${rating.id}`">
           <star-rating
             :increment="0.5"
@@ -161,9 +190,9 @@
         <div class="d-none" :id="`hiddenReview${rating.id}`">
           <input type="number" name="" :id="`updateRating${rating.id}`" min="1" max="10" :value="rating.rate" required>
           <input type="text" name="" :id="`updateReview${rating.id}`" :value="rating.review">
-          <button class="btn btn-primary" v-if="rating.user === $store.state.userId" @click="confirmEdittingMovieRating(rating)">확인</button>
+          <button class="btn" v-if="rating.user === $store.state.userId" @click="confirmEdittingMovieRating(rating)">확인</button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -181,6 +210,7 @@ export default {
   data: function() {
     return {
       starRating: 0,
+      reviewComment: '',
       // rate: 0,
     }
   },
@@ -188,11 +218,11 @@ export default {
     KProgress,
     StarRating,
   },
-  updated: {
-    starRating() {
+  // updated: {
+  //   starRating() {
 
-    }
-  },
+  //   }
+  // },
   computed: {
     selectedMovie() {
       return this.$store.state.selectedMovie
@@ -203,11 +233,13 @@ export default {
   },
   methods: {
     setRating(rating) {
-      this.rating = rating;
+      this.starRating = rating;
     },
     updateMovieRating(movie) {
-      const userRating = document.querySelector('#userRating')
-      const userReview = document.querySelector('#userReview')
+      // const userRating = document.querySelector('#userRating')
+      console.log(this.starRating)
+
+      // const userReview = document.querySelector('#userReview')
       const token = localStorage.getItem('jwt')
       // console.log(userRating.value)
       axios({
@@ -217,57 +249,58 @@ export default {
           Authorization: `Bearer ${token}`
         },
         data: {
-          rate: userRating.value,
-          review: userReview.value
+          rate: this.starRating * 2,
+          review: this.reviewComment
         }
       })
         .then((res) => {
           this.$store.dispatch('updateMovieRating', res.data) 
-          userRating.value = ''
-          userReview.value = ''
+          // this.starRating = 0
+          // userReview.value = ''
+          this.reviewComment = ''
           console.log(this.$store.state.selectedMovie)
         })
     },
-    editMovieRating(rating) {
-      const normalReview = document.querySelector(`#normalReview${rating.id}`)
-      const hiddenReview = document.querySelector(`#hiddenReview${rating.id}`)
+    // editMovieRating(rating) {
+    //   const normalReview = document.querySelector(`#normalReview${rating.id}`)
+    //   const hiddenReview = document.querySelector(`#hiddenReview${rating.id}`)
 
-      normalReview.classList.remove('d-visible')
-      normalReview.classList.add('d-none')
+    //   normalReview.classList.remove('d-visible')
+    //   normalReview.classList.add('d-none')
 
-      hiddenReview.classList.remove('d-none')
-      hiddenReview.classList.add('d-visible')
+    //   hiddenReview.classList.remove('d-none')
+    //   hiddenReview.classList.add('d-visible')
       
-    },
-    confirmEdittingMovieRating(rating) {
-      const userRating = document.querySelector(`#updateRating${rating.id}`)
-      const userReview = document.querySelector(`#updateReview${rating.id}`)
-      const token = localStorage.getItem('jwt')
-      axios({
-        method: 'post',
-        url: `${API_BASE_URL}${this.selectedMovie.id}/ratings/`,
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        data: {
-          rate: userRating.value,
-          review: userReview.value
-        }
-      })
-        .then(() => {
-          const normalReview = document.querySelector(`#normalReview${rating.id}`)
-          const hiddenReview = document.querySelector(`#hiddenReview${rating.id}`)
+    // },
+    // confirmEdittingMovieRating(rating) {
+    //   const userRating = document.querySelector(`#updateRating${rating.id}`)
+    //   const userReview = document.querySelector(`#updateReview${rating.id}`)
+    //   const token = localStorage.getItem('jwt')
+    //   axios({
+    //     method: 'post',
+    //     url: `${API_BASE_URL}${this.selectedMovie.id}/ratings/`,
+    //     headers: {
+    //       Authorization: `Bearer ${token}`
+    //     },
+    //     data: {
+    //       rate: userRating.value,
+    //       review: userReview.value
+    //     }
+    //   })
+    //     .then(() => {
+    //       const normalReview = document.querySelector(`#normalReview${rating.id}`)
+    //       const hiddenReview = document.querySelector(`#hiddenReview${rating.id}`)
 
-          rating.review = userReview.value
-          rating.rate = userRating.value
+    //       rating.review = userReview.value
+    //       rating.rate = userRating.value
 
-          normalReview.classList.add('d-visible')
-          normalReview.classList.remove('d-none')
+    //       normalReview.classList.add('d-visible')
+    //       normalReview.classList.remove('d-none')
 
-          hiddenReview.classList.add('d-none')
-          hiddenReview.classList.remove('d-visible')
-        })
-    },
+    //       hiddenReview.classList.add('d-none')
+    //       hiddenReview.classList.remove('d-visible')
+    //     })
+    // },
     deleteMovieRating(rating) {
       const token = localStorage.getItem('jwt')
       axios({
@@ -280,9 +313,17 @@ export default {
       .then((res) => {
         console.log(res)
         console.log(rating)
-        const normalReview = document.querySelector(`#normalReview${rating.id}`)
-        normalReview.classList.remove('d-visible')
-        normalReview.classList.add('d-none')
+        this.starRating = 0;
+        this.reviewComment = '';
+
+        this.$store.dispatch('deleteMovieRating', rating.id)
+
+        // 바로 삭제 되게 하기
+
+
+        // const normalReview = document.querySelector(`#normalReview${rating.id}`)
+        // normalReview.classList.remove('d-visible')
+        // normalReview.classList.add('d-none')
       })
     },
     changeLike(movie) {
@@ -335,6 +376,10 @@ export default {
 /* @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css); */
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+.white {
+  color: #EDEDED;
+}
+
 .vertical-line {
   /* border-left: 3px solid #ff0000; */
   border-left: 3px solid #ff0000;
@@ -385,6 +430,21 @@ export default {
   -webkit-box-orient: vertical;
 }
 
+.table {
+  vertical-align: middle;
+}
+
+.fa-trash-alt:hover {
+  transform: scale(1.3);  
+}
+
+#add-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 20px;
+}
+
 #changeLikeBtn {
   background: none;
   border: none;
@@ -399,3 +459,5 @@ export default {
   transform: scale(1.2) translate(-8px, -3px);
 }
 </style>
+
+

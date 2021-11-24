@@ -73,6 +73,11 @@ export default new Vuex.Store({
         state.selectedMovie.ratings.unshift(rating)
       }
     },
+    DELETE_MOVIE_RATING(state, ratingId) {
+      state.selectedMovie.ratings = state.selectedMovie.ratings.filter(rating => {
+        return rating.id !== ratingId
+      })
+    },
     POPULAR_BY_GENRE(state, params){
       state.popularByGenre[params.genre] = params.data
     },
@@ -111,6 +116,9 @@ export default new Vuex.Store({
     },
     updateMovieRating({ commit }, rating) {
       commit('UPDATE_MOVIE_RATING', rating)
+    },
+    deleteMovieRating({ commit }, ratingId) {
+      commit('DELETE_MOVIE_RATING', ratingId)
     },
     popularByGenre({ commit }, params) {
       // console.log(params)
