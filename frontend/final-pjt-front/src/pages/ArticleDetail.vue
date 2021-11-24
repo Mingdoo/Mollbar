@@ -1,12 +1,39 @@
 <template>
-  <div>
-    <h1>{{ selectedArticle.article_title }}</h1>
-    <h4>{{ selectedArticle.article_content }}</h4>
-    <button class="btn btn-warning" @click="deleteArticle" v-if="isMyArticle">Delete</button>
-    <button class="btn btn-secondary" @click="updateArticle(selectedArticle)" v-if="isMyArticle">Update</button>
-    <input type="text" name="" id="" v-if="isLogin" v-model="userComment">
-    <button class="btn btn-primary mt-3" @click="commentSubmit" v-if="isLogin">Submit</button>
-    <comment-list></comment-list>
+  <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto bg-black np">
+    <div class="card border-0 bg-black">
+      <div class="row justify-content-center">
+        <div class="mt-5 col-6">
+          <div class="card border-0 px-4 py-5">
+            <h1 class="">💡 제목 : {{ selectedArticle.article_title }}</h1>
+            <hr>
+            <div class="container">
+              <h6 style="height: 100%;" class="text-start">{{ selectedArticle.article_content }}</h6>
+            </div>
+            <hr>
+            <p class="text-end mx-2">게시일 : {{ selectedArticle.created_at | moment('calendar') }}</p>
+            <p class="text-end mx-2">수정일 : {{ selectedArticle.updated_at | moment('calendar') }}</p>
+            <p class="mb-0 text-end mx-2">작성자 : {{ selectedArticle.username }}</p>
+            <hr>
+            <div class="">
+              <button class="btn btn-danger mx-1 mb-0" @click="deleteArticle" v-if="isMyArticle">게시글 삭제</button>
+              <button class="btn btn-success mx-1 mb-0" @click="updateArticle(selectedArticle)" v-if="isMyArticle">게시글 수정</button>
+              <hr v-if="isMyArticle">
+              <div class="row">
+                <div class="col-10">
+                  <input type="text" name="" id="" v-if="isLogin" v-model="userComment">
+                </div>
+                <div class="col-2">
+                  <button class="btn btn-primary w-100 py-3 h-100" @click="commentSubmit" v-if="isLogin">댓글 생성</button>
+                </div>
+              </div> 
+              <hr>
+              
+              <comment-list></comment-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

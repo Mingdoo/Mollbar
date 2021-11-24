@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Community</h1>
+    <h1 class="np text-white mb-5">커뮤니티</h1>
     <article-list :articles="articles"></article-list>
   </div>
 </template>

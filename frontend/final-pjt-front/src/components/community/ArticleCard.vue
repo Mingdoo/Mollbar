@@ -1,12 +1,16 @@
 <template>
-  <div>
-    <router-link :to="`/community/${article.id}`" @click.native="selectArticle">{{ article.article_title }}</router-link> |
-    <h5 class="d-inline">작성자 : {{ article.username }}</h5>
-
-  </div>
+  <tr @click="selectArticle(article)" style="cursor: pointer;" class="text-white np">
+    <th scope="row">{{ article.id }}</th>
+    <td>{{ article.article_title }}</td>
+    <td>{{ article.username }}</td>
+    <td>{{ article.created_at | moment('calendar') }}</td>
+    <td>{{ article.updated_at | moment('calendar') }}</td>
+  </tr>
+  
 </template>
 
 <script>
+
 import axios from 'axios'
 export default {
   name: "ArticleCard",
@@ -19,7 +23,7 @@ export default {
     }
   },
   methods: {
-    selectArticle() {
+    selectArticle(article) {
       const token = localStorage.getItem('jwt')
       axios({
         method: 'get',
@@ -30,6 +34,7 @@ export default {
       })
         .then((res) => {
           this.$store.dispatch('setComments', res.data)
+          this.$router.push({path: `community/${article.id}`})
         }) 
         .catch(() => {
           this.$store.dispatch('setComments', [])

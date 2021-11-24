@@ -1,20 +1,35 @@
 <template>
-  <div>
-    <h1>COMMENT</h1>
-    <h5 v-for="comment in comments" :key="comment.id">
-      <div :id="`normalcomment${comment.id}`" class="commentformvisible">
-        {{ comment.content }}
-        <!-- {{ comment.comment_user }} -->
-        <!-- {{ comment.created_at }} -->
-        <button class="btn btn-primary" v-if="comment.comment_user === $store.state.userId" @click="updateComment(comment)">Edit</button>
-        <button class="btn btn-warning" v-if="comment.comment_user === $store.state.userId" @click="deleteComment(comment)">Delete</button>
-      </div>
-      <div :id="`editcomment${comment.id}`" class="commentformhidden">
-        <input type="text" name="" :value="comment.content" @input="userEditInput = $event.target.value">
-        <button class="btn btn-warning" @click="editComment(comment)">확인</button>
-        <button class="btn btn-primary" @click="cancelEditComment(comment)">취소</button>
-      </div>
-    </h5>
+  <div class="np">
+    <h1>댓글 목록</h1>
+    <hr>
+    <div v-if="comments.length">
+      <h5 v-for="comment in comments" :key="comment.id">
+        <div :id="`normalcomment${comment.id}`" class="commentformvisible row align-items-center">
+          <div class="col-2 text-success fs-6">
+            {{comment.username}}
+          </div>
+          <div class="col-5 text-start fs-6">
+            {{ comment.content }}
+          </div>
+          <div class="col-2 fs-6">
+            {{ comment.created_at | moment('calendar') }}
+          </div>
+          <div class="col-3">
+            <button class="btn btn-danger mx-1" v-if="comment.comment_user === $store.state.userId" @click="deleteComment(comment)">삭제</button>
+            <button class="btn btn-success mx-1" v-if="comment.comment_user === $store.state.userId" @click="updateComment(comment)">수정</button>
+          </div>
+        </div>
+        <div :id="`editcomment${comment.id}`" class="commentformhidden">
+          <input type="text" name="" :value="comment.content" @input="userEditInput = $event.target.value">
+          <button class="btn btn-primary mx-1 my-1" @click="editComment(comment)">확인</button>
+          <button class="btn btn-danger mx-1 my-1" @click="cancelEditComment(comment)">취소</button>
+        </div>
+      </h5>
+    </div>
+    <div v-else>
+      <p style="font-size: 15px">첫 댓글을 달아보세요!</p>
+    </div>
+    <hr v-if="comments">
   </div>
 </template>
 
