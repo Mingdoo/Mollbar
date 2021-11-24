@@ -23,6 +23,7 @@
             <!-- TODO: color-flow=true 적용할 지 결정하기 -->
             <k-progress 
               color=#ff0000
+              color-flow=true
               type="line"
               line-height=8
               :percent="userPercentage"
@@ -36,16 +37,24 @@
             <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
           </div>
         </div>
-        <p class="align-left mt-2">
-          <span class="bold h5">개봉일 </span>
-          <span>{{ selectedMovie.released_date }}</span>
-        </p>
-        <p class="align-left">
-          <span class="bold h5">출연</span>
-          <span v-for="actor in selectedMovie.actors" :key="actor">
-            {{ actor }} | 
-          </span>
-        </p>
+        <div class="align-left mt-3 mb-3 row">
+          <div class="col-2">
+            <span class="bold h5">개봉일 </span>
+          </div>
+          <div class="col-10">
+            <span>{{ selectedMovie.released_date }}</span>
+          </div>
+        </div>
+        <div class="align-left row">
+          <div class="col-2">
+            <span class="bold h5">출연</span>
+          </div>
+          <div class="col-10">
+            <span v-for="actor in selectedMovie.actors" :key="actor">
+              {{ actor }} | 
+            </span>
+          </div>
+        </div>
         <hr>
         <p class="overview align-left">
           {{ selectedMovie.overview }}
@@ -70,7 +79,6 @@
             </k-progress>
           </div>
           <div class="col-1">
-            <i class="far fa-star"></i> -->
             <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
           </div>
         </div>
@@ -78,12 +86,17 @@
           <span class="bold h5">개봉일 </span>
           <span>{{ selectedMovie.released_date }}</span>
         </p>
-        <p class="align-left">
-          <span class="bold h5">출연</span>
-          <span v-for="actor in selectedMovie.actors" :key="actor">
-            {{ actor }} | 
-          </span>
-        </p>
+        <div class="align-left row d-flex">
+          <div class="bold h5 col-2">
+            <span>출연 </span>
+          </div>
+          <!-- <span class="bold h5">출연</span> -->
+          <div class="col-10">
+            <span v-for="actor in selectedMovie.actors" :key="actor">
+              {{ actor }} | 
+            </span>
+          </div>
+        </div>
         <hr>
         <p class="overview align-left">
           {{ selectedMovie.overview }}
@@ -94,18 +107,56 @@
         <button @click="changeLike(selectedMovie)" id="changeLikeBtn"></button>
       </div> -->
       <div class="col-10">
+        <star-rating
+          :increment="0.5"
+          :glow="3"
+          :clearable=true
+          @rating-selected ="setRating"
+        >
+        </star-rating>
         <div>
-          <input type="number" name="" id="userRating" min="1" max="10" required>
+          <input type="number" name="" id="userRating" :starRating="starRating" min="1" max="10" required>
           <input type="text" name="" id="userReview">
           <button class="btn btn-primary" @click="updateMovieRating(selectedMovie)">Submit</button>
         </div>
       </div>
-      <div v-for="rating in selectedMovie.ratings" :key="rating.id">
-        <div class="d-visible" :id="`normalReview${rating.id}`">
+
+      <!-- 평가 목록 -->
+      <table class="table">
+        <tbody>
+          <tr v-for="rating in selectedMovie.ratings" :key="rating.id">
+            <td>{{rating.username}}</td>
+            <td>
+              <star-rating
+                :increment="0.5"
+                :star-size="24"
+                :rating="rating.rate / 2"
+                :show-rating="false"
+                :read-only="true"
+
+              >
+              </star-rating>  
+            </td>
+            <td>{{rating.review}}</td>
+            <button class="btn btn-primary" v-if="rating.user === $store.state.userId" @click="editMovieRating(rating)">수정</button>
+            <button class="btn btn-warning" v-if="rating.user === $store.state.userId" @click="deleteMovieRating(rating)">삭제</button>
+          </tr>
+        </tbody>
+      </table>
+
+      <div v-for="rating in selectedMovie.ratings" :key="rating.id" class="row">
+        <div class="d-visible col-10" :id="`normalReview${rating.id}`">
+          <star-rating
+            :increment="0.5"
+          >
+          </star-rating>
+          <p>{{ rating.username }}</p>
           <p>평점 : {{ rating.rate }}</p>
           <p>리뷰 : {{ rating.review }}</p>
-          <button class="btn btn-primary" v-if="rating.user === $store.state.userId" @click="editMovieRating(rating)">수정</button>
-          <button class="btn btn-warning" v-if="rating.user === $store.state.userId" @click="deleteMovieRating(rating)">삭제</button>
+        </div>
+        <div class="d-visible col-2" v-if="rating.user === $store.state.userId">
+          <button class="btn btn-primary" @click="editMovieRating(rating)">수정</button>
+          <button class="btn btn-warning" @click="deleteMovieRating(rating)">삭제</button>
         </div>
         <div class="d-none" :id="`hiddenReview${rating.id}`">
           <input type="number" name="" :id="`updateRating${rating.id}`" min="1" max="10" :value="rating.rate" required>
@@ -120,7 +171,7 @@
 <script>
 import axios from 'axios'
 import KProgress from 'k-progress';
-// import StarRating from 'vue-star-rating'
+import StarRating from 'vue-star-rating'
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api/v1/movies/'
 // const API_KEY = process.env.VUE_APP_API_KEY
@@ -129,12 +180,18 @@ export default {
   name: 'MovieDetail',
   data: function() {
     return {
-      rate: 0,
+      starRating: 0,
+      // rate: 0,
     }
   },
   components: {
     KProgress,
-    // StarRating
+    StarRating,
+  },
+  updated: {
+    starRating() {
+
+    }
   },
   computed: {
     selectedMovie() {
@@ -145,6 +202,9 @@ export default {
     }
   },
   methods: {
+    setRating(rating) {
+      this.rating = rating;
+    },
     updateMovieRating(movie) {
       const userRating = document.querySelector('#userRating')
       const userReview = document.querySelector('#userReview')
@@ -308,6 +368,13 @@ export default {
 .align-left {
   text-align: left;
   padding-left: 1rem;
+}
+
+.actors {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;        /* 최대 10줄까지만 보여주기 */
+  -webkit-box-orient: vertical;
 }
 
 .overview {
