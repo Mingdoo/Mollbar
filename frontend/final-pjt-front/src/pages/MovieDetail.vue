@@ -23,9 +23,9 @@
             <!-- TODO: color-flow=true 적용할 지 결정하기 -->
             <k-progress 
               color=#ff0000
-              color-flow=true
+              :color-flow="true"
               type="line"
-              line-height=8
+              :line-height="8"
               :percent="userPercentage"
               style="margin: 0 0 0 16px;"
             >
@@ -112,12 +112,13 @@
           :glow="3"
           :clearable=true
           :show-rating="false"
+          :star-size="30"
           @rating-selected="setRating"
           v-model="starRating"  
         >
         </star-rating>
         <!-- <input type="number" name="" id="userRating" :starRating="starRating" min="1" max="10" required> -->
-        <input type="text" class="col-7" id="userReview" v-model="reviewComment" @keyup.enter="updateMovieRating(selectMovie)">
+        <input type="text" class="col-5 offset-2" id="userReview" v-model="reviewComment" @keyup.enter="updateMovieRating(selectMovie)">
         <button 
           class="btn btn-outline-success col-1 offset-1 white"
           style="font-size: 18px;"
@@ -336,6 +337,7 @@ export default {
         },
       })
         .then((res) => {
+          console.log('ㅁㅁㅁ', res)
           axios({
             method: 'get',
             url: 'http://127.0.0.1:8000/api/v1/accounts/my_wishlist/',
@@ -344,29 +346,41 @@ export default {
             }
           })
           .then((res) => {
+            console.log('aaa')
+            console.log(res)
             this.$store.dispatch('myWishList', res.data)
+          })
+          .then(res => {
+            const likebtn = document.querySelector('#star')
+            if (likebtn.classList.contains('far')) {
+              likebtn.classList.remove('far')
+              likebtn.classList.add('fas')
+            } else {
+              likebtn.classList.remove('fas')
+              likebtn.classList.add('far')
+            }
+            console.log('bbb')
+            console.log(res)
           })
           .catch((err) => {
             console.log(err)
           })
-          const likebtn = document.querySelector('#changeLikeBtn')
-          if (likebtn.innerHTML === '<i class="fas fa-star"></i>') {
-            likebtn.innerHTML = '<i class="far fa-star"></i>'
-          } else {
-            likebtn.innerHTML = '<i class="fas fa-star"></i>'
-          }
-          console.log(res)
         })
+          .then(res => {
+            console.log(res)
+          })  
     }
   },
-  mounted(){
+  mounted() {
     const likebtn = document.querySelector('#changeLikeBtn')
     console.log(likebtn)
     console.log(this.$store.state.myWishList.includes(this.selectedMovie.id))
     if (this.$store.state.myWishList.includes(this.selectedMovie.id)) {
-      likebtn.innerHTML = '<i class="fas fa-star"></i>'
+      console.log('aaa')
+      likebtn.innerHTML = '<i class="fas fa-star" id="star"></i>'
       } else {
-      likebtn.innerHTML = '<i class="far fa-star"></i>'
+      console.log('bbb')
+      likebtn.innerHTML = '<i class="far fa-star" id="star"></i>'
     }
   },
 }

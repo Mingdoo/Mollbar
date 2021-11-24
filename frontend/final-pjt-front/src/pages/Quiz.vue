@@ -18,10 +18,10 @@
         style="max-width: 20rem;"
         class="mb-2 overflow-hidden"
       >
-      <b-card-text>
+      <b-card-text class="mt-5 mb-5">
         <p>2000년 이후 개봉한 한국영화 포스터의 일부분과 4개의 보기가 주어집니다.</p>
         <p>포스터에 맞는 영화 제목을 골라주세요.</p>
-        <p>총 10개의 문제가 주어지며, 각 문제당 10초의 제한 시간이 있습니다.</p>
+        <p>총 10개의 문제가 주어지며, 각 문제당 15초의 제한 시간이 있습니다.</p>
       </b-card-text>
       <b-button @click="startQuizFunc()">Start Quiz</b-button>
     </b-card>
@@ -52,7 +52,7 @@
     <br>
     <b-progress
         variant="warning"
-        :max="10"
+        :max="15"
         :value="countDown"
         height="4px"
       ></b-progress>
@@ -85,7 +85,7 @@ export default {
             currentQuestion: 0,
             showScore: false,
             score:0,
-            countDown : 10,
+            countDown : 15,
             timer:null,
             startQuiz: false,
 
@@ -107,7 +107,7 @@ export default {
             if(nextQuestion < this.questions.length){
             this.currentQuestion = nextQuestion;
 
-            this.countDown = 10;
+            this.countDown = 15;
             this.countDownTimer();
             }
             else {
@@ -148,7 +148,8 @@ export default {
 .card {
     min-width: 100%;
     border-radius: 15px;
-    padding: 20px;
+    border: none;
+    /* padding: 20px; */
     box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
 }
 .card-q{
@@ -188,8 +189,8 @@ export default {
 
 #poster-image {
   /* position: absolute; */
-  height: 60px;
-  width: 50%;
+  height: 40px;
+  width: 100%;
   background: no-repeat center center fixed;
   margin-top: 50px;
   background-position-y: 10%;
@@ -201,7 +202,7 @@ export default {
 }
 
 #cardBox {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 </style>

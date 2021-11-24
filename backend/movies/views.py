@@ -150,12 +150,12 @@ def toggle_wishlist(request, movie_id):
 
         return Response(
             {"message": f'{movie.title}을 찜 목록에서 제거했습니다.'},
-            status=status.HTTP_200_OK
+            status=status.HTTP_204_NO_CONTENT
         )
     else:
         request.user.wishlist.add(movie)
 
         return Response(
             {"message": f'{movie.title}을 찜 목록에 추가했습니다.'},
-            status=status.HTTP_204_NO_CONTENT
+            status=status.HTTP_200_OK
         )
