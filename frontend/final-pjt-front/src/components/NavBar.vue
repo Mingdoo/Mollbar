@@ -33,8 +33,8 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <div class="d-flex mx-5">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="userSearchInput" @keyup.enter="searchMovie">
-            <button class="btn btn-outline-secondary" type="submit" @click="searchMovie">Search</button>
+            <input class="form-control me-2" type="search" placeholder="뭐 볼래?" aria-label="Search" v-model="userSearchInput" @keyup.enter="searchMovie">
+            <button class="btn btn-outline-secondary w-25" type="submit" @click="searchMovie">검색</button>
           </div>
 
         </b-navbar-nav>
@@ -65,12 +65,15 @@ export default {
       axios({
         method: 'get',
         url: API_SEARCH_URL,
-        headers: {
+        params: {
           query: this.userSearchInput,
         }
       })
         .then((res) => {
-          console.log(res)
+          this.$store.dispatch('searchMovie', res.data)
+        })
+        .then(() => {
+          this.$router.push({name: "Search"})
         })
         .catch((err) => {
           console.log(err)

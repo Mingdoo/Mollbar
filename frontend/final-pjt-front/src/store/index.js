@@ -9,6 +9,7 @@ export default new Vuex.Store({
     trendingMovieList: [],
     selectedMovie: '',
     myWishList: [],
+    searchResults: [],
     
     selectedArticle: '',
     selectedArticleComments: [],
@@ -83,6 +84,9 @@ export default new Vuex.Store({
     },
     USER_PROFILE(state, data) {
       state.userProfile = data
+    },
+    SEARCH_MOVIE(state, data) {
+      state.searchResults = data
     }
   },
   actions: {
@@ -142,6 +146,9 @@ export default new Vuex.Store({
     },
     userProfile({ commit }, data) {
       commit('USER_PROFILE', data)
+    },
+    searchMovie({ commit }, data) {
+      commit('SEARCH_MOVIE', data)
     }
   },
   modules: {

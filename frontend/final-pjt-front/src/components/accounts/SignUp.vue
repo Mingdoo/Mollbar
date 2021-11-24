@@ -1,46 +1,55 @@
 <template>
-  <div class="row">
-    <h1>Signup Page</h1>
-    <div class="col-6">
-
-      <label for="usrname">아이디</label>
-      <input 
-        type="text" id="usrname" name="usrname" 
-        required v-model="credentials.username"
-        pattern="^([a-z0-9_]){6,50}$"
-        title="warning"
-        class="mb-3"
-      >
-
-      <label for="psw">비밀번호</label>
-      <input 
-        type="password" id="psw" name="psw"
-        pattern="(?=.[a-z])(?=.*\d)(?=.*[A-Z]).{8,50}"
-        title="영문 대소문자, 숫자를 꼭 포함하여 8자 이상 50자 미만으로 작성해주세요."
-        required
-        v-model="credentials.password"
-        class="mb-3"
-      >
-      <label for="pswconf">비밀번호 확인</label>
-      <input type="password" name="pswconf" id="pswconf" v-model="credentials.passwordConfirmation" @keyup.enter="signUp" class="mb-3">
-      
-      <label for="eml">이메일</label>
-      <input type="email" name="" id="eml" v-model="credentials.email" class="mb-3">
-      <input type="submit" value="Submit" class="accountsubmit" @click="signUp" :class="{'visible': isPasswordConfirmationValid && isPasswordContainsCapital && isPasswordContainsLower && isPasswordContainsNumber && isPasswordLengthValid }">
-
-
-    </div>
-    <div class="col-6 message">
-      <h4>아이디 규칙</h4>
-      <p id="idconfirmation" class="invalid mt-3"><b>숫자 또는 소문자</b>로만 6자 이상 포함해주세요</p>
-      <h4>패스워드 규칙</h4>
-      <p id="capital" class="invalid mt-3"><b>대문자</b>를 포함해주세요</p>
-      <p id="lowercase" class="invalid"><b>소문자</b>를 포함해주세요</p>
-      <p id="number" class="invalid"><b>숫자</b>를 포함해주세요</p>
-      <p id="length" class="invalid mb-4"><b>8자</b> 이상을 포함해주세요</p>
-      <p id="passwordconfirmation" class="invalid mb-4"><b>동일한</b> 비밀번호를 입력해주세요</p>
+  <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto bg-black">
+    <div class="card card0 border-0 bg-black">
+        <div class="row d-flex">
+            <div class="col-lg-6 col-xl-4">
+                <div class="card1 pb-5">
+                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> <img src="../../assets/instagram_profile_image.png" class="image">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-4 col-xl-4">
+                <div class="card1 card border-0 px-4 py-5">
+                <h1>회원가입</h1>
+                    <div class="row px-3"> <label class="mb-1">
+                      <h6 class="mb-0 text-sm">아이디</h6></label>
+                      <input class="mb-4" type="text" name="username" id="usrname" placeholder="아이디를 입력하세요" required v-model="credentials.username" pattern="^([a-z0-9_]){6,50}$" title="아이디를 6자 이상 입력해주세요.">
+                    </div>
+                    <div class="row px-3"> <label class="mb-1">
+                      <h6 class="mb-0 text-sm">비밀번호</h6></label>
+                      <input class="mb-4" type="password" name="password" id="psw" placeholder="비밀번호를 입력하세요" v-model="credentials.password" pattern="(?=.[a-z])(?=.*\d)(?=.*[A-Z]).{8,50}" title="영문 대소문자, 숫자를 꼭 포함하여 8자 이상 50자 미만으로 작성해주세요.">
+                    </div>
+                    <div class="row px-3"> <label class="mb-1">
+                      <h6 class="mb-0 text-sm">비밀번호 확인</h6></label>
+                      <input class="mb-4" type="password" name="passwordconfirmation" id="pswconf" placeholder="비밀번호를 입력하세요" v-model="credentials.passwordConfirmation" @keyup.enter="signUp">
+                    </div>
+                    <div class="row px-3"> <label class="mb-1">
+                      <h6 class="mb-0 text-sm">이메일</h6></label>
+                      <input class="mb-4" type="email" name="" placeholder="* 선택사항" v-model="credentials.email">
+                    </div>
+                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-secondary text-center mt-4" :class="{'visible': isPasswordConfirmationValid && isPasswordContainsCapital && isPasswordContainsLower && isPasswordContainsNumber && isPasswordLengthValid }" @click="signUp">회원가입</button> </div>
+                </div>
+            </div>
+            <div class="col-lg-2 d-xl-none"></div>
+            <div class="col-lg-8 col-xl-4 mt-4 card card2 px-4 py-5 border-0">
+              <h4 class="mt-5">아이디 규칙</h4>
+              <p id="idconfirmation" class="invalid mt-3"><b>숫자 또는 소문자</b>로만 6자 이상 포함해주세요</p>
+              <h4>패스워드 규칙</h4>
+              <p id="capital" class="invalid mt-3"><b>대문자</b>를 포함해주세요</p>
+              <p id="lowercase" class="invalid"><b>소문자</b>를 포함해주세요</p>
+              <p id="number" class="invalid"><b>숫자</b>를 포함해주세요</p>
+              <p id="length" class="invalid mb-4"><b>8자</b> 이상을 포함해주세요</p>
+              <p id="passwordconfirmation" class="invalid mb-4"><b>동일한</b> 비밀번호를 입력해주세요</p>
+            </div>
+        </div>
+        <div class="bg-blue py-4">
+            <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2019. All rights reserved.</small>
+            </div>
+        </div>
     </div>
   </div>
+  
+
 </template>
 
 <script>
@@ -92,14 +101,6 @@ export default {
 
   },
   updated() {
-    // console.log(
-    //   this.isUsernameLengthValid,
-    //   this.isPasswordContainsNumber,
-    //   this.isPasswordContainsCapital,
-    //   this.isPasswordLengthValid,
-    //   this.isPasswordContainsLower,
-    //   this.isPasswordConfirmationValid
-    // )
     //input
     var userName = document.getElementById("usrname");
     var myInput = document.getElementById("psw");
@@ -228,5 +229,9 @@ input {
   position: relative;
   left: -5px;
   content: "❌";
+}
+
+.image {
+  width: 600px;
 }
 </style>

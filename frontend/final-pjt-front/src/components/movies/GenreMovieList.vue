@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="np text-white h2" style="cursor:pointer;">
-      {{ this.genreName[this.genre] }} 영화는 어때요?
+    <div class="np text-white" style="cursor:pointer;">
+      <span class="text-white h2 text-decoration-none" @click="searchMovie">
+        {{ this.genreName[this.genre] }} 영화는 어때요?
+      </span>
     </div>
     <div class="container-carousel row">
       <div class="col-1" style="cursor:pointer;" @click="clickLeft">
         <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 40px;"></i>
       </div>
-      <div class="col-10" v-if="movieList">
+      <div class="col-10">
         <div :id="`carousel${this.genre}`">
           <genre-movie-item
             v-for="movieByGenre in movieList"
@@ -25,10 +27,11 @@
 </template>
 
 <script>
-// import _ from 'lodash';
+import _ from 'lodash';
 import GenreMovieItem from '@/components/movies/GenreMovieItem';
 import $ from 'jquery';
-
+import axios from 'axios'
+const API_SEARCH_URL = 'http://127.0.0.1:8000/api/v1/movies/search/'
 
 
 export default {
@@ -38,7 +41,7 @@ export default {
   },
   data() {
     return {
-      // movieList: [],
+      movieList: [],
       scrollAmount: 0,
       scrollPerclick: 200,
       genreName : {
@@ -83,19 +86,38 @@ export default {
           }, 400);
         }
     },
-  },
-  computed: {
-    movieList() {
-      // console.log(this.$store.state.popularByGenre)
-      // console.log('!!!!!!!!!!!!!!!')
-      return this.$store.state.popularByGenre[this.genre]
+    searchMovie() {
+      console.log('!')
+      axios({
+        method: 'get',
+        url: API_SEARCH_URL,
+        params: {
+          genre: this.genre
+        }
+      })
+        .then((res) => {
+          this.$store.dispatch('searchMovie', res.data)
+        })
+        .then(() => {
+          this.$router.push({name: "Search"})
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
-  // mounted() {
-  //   setTimeout(() => {
-  //     this.movieList = _.shuffle(this.$store.state.popularByGenre[this.genre])
-  //   }, 1500)
-  // }
+  // computed: {
+  //   movieList() {
+  //     // console.log(this.$store.state.popularByGenre)
+  //     // console.log('!!!!!!!!!!!!!!!')
+  //     return this.$store.state.popularByGenre[this.genre]
+  //   }
+  // },
+  mounted() {
+    setTimeout(() => {
+      this.movieList = _.shuffle(this.$store.state.popularByGenre[this.genre])
+    }, 1500)
+  }
 }
 </script>
 
