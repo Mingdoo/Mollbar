@@ -4,22 +4,16 @@
       <div class="row">
       </div>
       <div class="row input-group">
-        <h1 class="np mb-3 text-white">같이 영화를 찾아봐요</h1>
-        <div class="col-4">
+        <h1 class="np mb-5 text-white">같이 영화를 찾아봐요</h1>
+        <hr>
+        <div class="col-lg-4">
           <h2 class="text-white np">제목</h2>
-        </div>
-        <div class="col-4">
-          <h2 class="text-white np">장르</h2>
-        </div>
-        <div class="col-4">
-          <h2 class="text-white np">최소 평점</h2>
-        </div>
-        <div class="col-md-4">
           <input type="text" name="" id="" placeholder="영화 제목을 입력해주세요" v-model="searchName" @keyup.enter="searchMovie">
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4">
+          <h2 class="text-white np">장르</h2>
           <select name="" id="" class="form-select form-select-lg np" v-model="genre" style="line-height: inherit; font-size: 22px">
-            <option value="" selected>전체 장르</option>
+            <option value="" selected>최신 영화</option>
             <option value="12" >어드벤쳐</option>
             <option value="14" >판타지</option>
             <option value="16" >애니메이션</option>
@@ -41,7 +35,8 @@
             <option value="10770" >TV 영화</option>
           </select>
         </div>
-        <div class="col-md-4 justify-content-center text-align-center">
+        <div class="col-lg-4">
+          <h2 class="text-white np">최소 평점</h2>
           <star-rating
           :increment="0.1"
           :glow="3"

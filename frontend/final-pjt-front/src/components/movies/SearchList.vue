@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-4 col-xl-3 my-5">
+  <div class="col-md-6 col-lg-4 col-xl-3 my-5">
     <div class="card p-3 mb-2 bg-dark">
       <div class="d-flex justify-content-between">
         <div class="d-flex flex-row align-items-center">
@@ -7,12 +7,12 @@
         </div>
         <div class="badge"> <span> <b>{{ searchResult.vote_avg }}</b></span> </div>
       </div>
-      <div class="mt-5">
-        <h5 class="heading text-white np" @click="movieDetail(searchResult)">{{ searchResult.title }}<br>
+      <div class="mt-5 row">
+        <h6 class="heading text-white np col-12 justify-content-center text-align-center">{{ searchResult.title }}<br>
+        </h6>
           <router-link :to="`/movies/${searchResult.id}`">
-            <img :src="movieUrl" alt="" class="w-75 cardimage">
+            <img :src="movieUrl" alt="" class="w-75 cardimage" @click="movieDetail(searchResult)">
           </router-link>
-        </h5>
         <div class="mt-5">
           <div class="progress">
             <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -107,7 +107,7 @@ export default {
     display: flex;
     color: crimson;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .progress {
@@ -129,7 +129,6 @@ export default {
 }
 
 .cardimage {
-  height: 80%;
   background-size: contain;
   margin: 30px 20px;
   transition: 0.5s ease;

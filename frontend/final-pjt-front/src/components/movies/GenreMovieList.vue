@@ -87,7 +87,6 @@ export default {
         }
     },
     searchMovie() {
-      console.log('!')
       axios({
         method: 'get',
         url: API_SEARCH_URL,
