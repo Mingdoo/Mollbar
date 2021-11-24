@@ -134,6 +134,8 @@ def search(request):
             {"message": "조건을 만족하는 영화가 없습니다."},
             status=status.HTTP_204_NO_CONTENT
         )
+    
+    movies = movies[:48]
 
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
