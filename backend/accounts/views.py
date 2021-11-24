@@ -110,13 +110,28 @@ def change_password(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['GET'])
+# 프로필 수정 넣을지 뺄지 결정하기
+@api_view(['GET', 'PUT'])
 def profile(request, user_id):
-    # user_id를 받아서 해당 유저의 정보를 리턴한다.
     user = get_object_or_404(get_user_model(), id=user_id)
 
-    serializer = ProfileSerializer(user)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    # 프로필 정보 가져오기
+    if request.method == 'GET':
+        serializer = ProfileSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    # 프로필 정보 수정하기
+    # else:
+    #     if request.user.id != user_id:
+    #         Response(
+    #             {'message': '다른 사람의 프로필은 수정할 수 없습니다.'},
+    #             status=status.HTTP_400_BAD_REQUEST
+    #         )
+
+    #     serializer = ProfileSerializer(user, data=request.data)
+
+    #     if serializer.is_valid(raise_exception=True):
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

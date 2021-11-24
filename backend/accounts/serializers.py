@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.utils.timezone import now
+from movies.models import Rating
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,9 +13,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    days_since_joined = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'email', 'date_joined', 'wishlist', )
+        fields = ('id', 'username', 'email', 'wishlist', 'date_joined', 'rating_set', 'days_since_joined')
+    
+    def get_days_since_joined(self, obj):
+        return (now() - obj.date_joined).days
+
 
 
 class WishlistSerializer(serializers.ModelSerializer):
