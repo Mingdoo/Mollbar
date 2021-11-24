@@ -75,6 +75,11 @@ export default new Vuex.Store({
         state.selectedMovie.ratings.unshift(rating)
       }
     },
+    DELETE_MOVIE_RATING(state, ratingId) {
+      state.selectedMovie.ratings = state.selectedMovie.ratings.filter(rating => {
+        return rating.id !== ratingId
+      })
+    },
     POPULAR_BY_GENRE(state, params){
       state.popularByGenre[params.genre] = params.data
     },
@@ -117,6 +122,7 @@ export default new Vuex.Store({
     updateMovieRating({ commit }, rating) {
       commit('UPDATE_MOVIE_RATING', rating)
     },
+
     popularByGenre({ commit }) {
       // const API_KEY = process.env.VUE_APP_API_KEY
       const genres = [12, 14, 16, 18, 27, 28, 35, 36, 37, 53, 80, 99, 878, 9648, 10402, 10749, 10751, 10752, 10770]
@@ -126,21 +132,20 @@ export default new Vuex.Store({
         url: `http://127.0.0.1:8000/api/v1/movies/genre-popular/${genre}/`,
       })
         .then((res) => {
-          // this.$store.state.popularByGenre[genre] = res.data
           commit('POPULAR_BY_GENRE', {
             genre: genre,
             data: res.data
           })
-          // this.$store.dispatch('popularByGenre', {
-          //   genre: genre,
-          //   data: res.data
-          // })
         })
         .catch((err) => {
           console.log(err)
         })
       })
     },
+    deleteMovieRating({ commit }, ratingId) {
+      commit('DELETE_MOVIE_RATING', ratingId)
+    },
+
     myWishList({ commit }, data){
       commit('MY_WISH_LIST', data)
     },
