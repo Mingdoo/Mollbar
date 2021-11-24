@@ -12,15 +12,9 @@
       <div class="mt-5 row">
         <h6 class="heading text-white np col-12 justify-content-center text-align-center">{{ searchResult.title }}<br>
         </h6>
-          <router-link :to="`/movies/${searchResult.id}`">
-            <img :src="movieUrl" alt="" class="w-75 cardimage" @click="movieDetail(searchResult)">
-          </router-link>
-        <div class="mt-5">
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-          <div class="mt-3"> <span class="text-white">32 Applied <span class="text2">of 50 capacity</span></span> </div>
-        </div>
+        <router-link :to="`/movies/${searchResult.id}`">
+          <img :src="movieUrl" alt="" class="w-75 cardimage" @click="movieDetail(searchResult)">
+        </router-link>
       </div>
     </div>
   </div>
