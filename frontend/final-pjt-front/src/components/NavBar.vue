@@ -33,7 +33,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <div class="d-flex mx-5">
-            <input class="form-control me-2" type="search" placeholder="뭐 볼래?" aria-label="Search" v-model="userSearchInput" @keyup.enter="searchMovie">
+            <input class="form-control me-2" type="search" placeholder="뭐 볼까?" aria-label="Search" v-model="userSearchInput" @keyup.enter="searchMovie">
             <button class="btn btn-outline-secondary w-25" type="submit" @click="searchMovie">검색</button>
           </div>
 
