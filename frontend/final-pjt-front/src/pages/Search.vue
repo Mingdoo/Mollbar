@@ -41,31 +41,47 @@
             <option value="10770" >TV 영화</option>
           </select>
         </div>
-        <div class="col-md-4">
-          <input type="number" name="" id="" min=0 max=10 placeholder="최소 평점" v-model="min_rate">
+        <div class="col-md-4 justify-content-center text-align-center">
+          <star-rating
+          :increment="0.1"
+          :glow="3"
+          :clearable=true
+          :show-rating="false"
+          v-model="min_rate"
+          class="justify-content-center" 
+          >
+          </star-rating>
         </div>
         <div>
           <button class="btn btn-outline-secondary my-3 w-100 np" @click="searchMovie">검색</button>
         </div>
         <hr>
       </div>
-        <search-list v-for="searchResult in searchResults" :key="searchResult.id" :search-result="searchResult"></search-list>
+      <transition-group
+      name="fade"
+      mode="out-in"
+      class="row"
+      >
+      <search-list v-for="searchResult in searchResults" :key="searchResult.id" :search-result="searchResult"></search-list>
       <div v-if="!searchResults">
         <p class="np font-white" style="font-size: 500px">..텅..</p>
       </div>
+      </transition-group>
     </div>
   </div>
 </template>
 
 <script>
 import SearchList from '@/components/movies/SearchList'
+import StarRating from 'vue-star-rating';
 import axios from 'axios'
 const API_SEARCH_URL = 'http://127.0.0.1:8000/api/v1/movies/search/'
 
 export default {
   name: "Search",
   components: {
-    SearchList
+    SearchList,
+    StarRating,
   },
   data() {
     return {
@@ -78,27 +94,26 @@ export default {
     searchResults() {
       return this.$store.state.searchResults
     },
-    isSearched(e) {
-      console.log(e)
-      return ''
-    }
   },
   methods: {
     searchMovie() {
+      console.log(this.min_rate * 2)
       axios({
         method: 'get',
         url: API_SEARCH_URL,
         params: {
           query: this.searchName,
           genre: this.genre,
-          min_rate: this.min_rate,
+          min_rate: this.min_rate * 2,
         }
       })
         .then((res) => {
           this.$store.dispatch('searchMovie', res.data)
         })
         .then(() => {
-          this.$router.push({name: "Search"})
+          this.$router.push({name: "Search"}).catch(() => {
+
+          })
         })
         .catch((err) => {
           alert(err)
@@ -109,5 +124,7 @@ export default {
 </script>
 
 <style>
-
+search-list {
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear, font 0.05s linear;
+}
 </style>
