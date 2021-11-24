@@ -111,9 +111,9 @@ def search(request):
         },
     ]
     """
-    search_word = request.headers.get('query', '').strip()
-    genre = request.headers.get('genre', '')
-    min_rate = request.headers.get('min_rate', 0)
+    search_word = request.GET.get('query', '').strip()
+    genre = request.GET.get('genre', '')
+    min_rate = request.GET.get('min_rate', 0)
 
     # 1. 검색어 필터링
     if search_word:
