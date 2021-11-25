@@ -1,6 +1,6 @@
 <template>
-  <div class="carouselbox" @click="movieDetail(wishListId)" style="display: inline;">
-    <router-link :to="`/movies/${wishListId}`">
+  <div class="carouselbox" @click="movieDetail(wishMovieId)" style="display: inline;">
+    <router-link :to="`/movies/${wishMovieId}`">
       <img :src="movieUrl" alt="" class="img slider-img">
     </router-link>
   </div>
@@ -13,7 +13,7 @@ const BASE_URL = 'https://image.tmdb.org/t/p/w500'
 export default {
   name: 'WistListItem',
   props: {
-    wishListId: Number,
+    wishMovieId: Number,
   },
   data() {
     return {
@@ -26,9 +26,10 @@ export default {
     },
   },
   created() {
+    console.log('!!!!!!!')
     axios({
       method: 'get',
-      url: `http://127.0.0.1:8000/api/v1/movies/${this.wishListId}/`
+      url: `http://127.0.0.1:8000/api/v1/movies/${this.wishMovieId}/`
     })
       .then(res => {
         this.posterPath = res.data[0].poster_path
@@ -42,6 +43,7 @@ export default {
         url: `http://127.0.0.1:8000/api/v1/movies/${wishListId}/`
       })
       .then((res) => {
+        console.log(res)
         this.$store.dispatch('movieDetail', res.data[0])
         this.$router.push({ name: 'MovieDetail' }).catch(() => {})
       })
@@ -53,6 +55,26 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.carouselbox {
+  height: 100%;
+  width: auto;
+  display: inline-block;
+  text-align: center;
+  padding-bottom: 10px !important;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.carouselbox img {
+  height: 80%;
+  background-size: contain;
+  margin: 30px 20px;
+  transition: 0.5s ease;
+  /* z-index: 2; */
+}
+.carouselbox img:hover {
+  transform: scale(1.2);
+  z-index: 5;
+}
 </style>

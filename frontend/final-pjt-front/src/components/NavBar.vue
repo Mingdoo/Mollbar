@@ -91,8 +91,8 @@ export default {
           this.$store.dispatch('searchMovie', res.data)
         })
         .then(() => {
+          this.$router.push({name: "Search", params: {query: this.userSearchInput }})
           this.userSearchInput = ''
-          this.$router.push({name: "Search"})
         })
         .catch((err) => {
           console.log(err)

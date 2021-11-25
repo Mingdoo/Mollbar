@@ -1,9 +1,9 @@
 <template>
   <section>
     <!-- <div class="container"> -->
-      <div class="row">
+      <div class="row my-5">
         <!-- 1. 프로필 부분 -->
-        <div class="col-4 profile-area row">
+        <div class="col-4 profile-area row my-0">
           <b-card
             bg-variant="light"
             border-variant="danger"
@@ -23,9 +23,6 @@
               </div>
               <!-- 1-2. 회원 탈퇴 / 비밀번호 변경 -->
               <div style="width: 100%;">
-                <b-button class="profile-btn" style="background-color: #444444;" @click="changePassword">
-                  비밀번호 변경
-                </b-button>
 
                 <b-button id="toggle-btn" class="profile-btn" style="background-color: #DA0037;" @click="toggleModal">회원 탈퇴</b-button>
 
@@ -58,30 +55,23 @@
 
         <!-- 2. 영화 부분 -->
         <div class="col-8 movie-area">
-          <div class="container-carousel row">
-            <h2 class="np" style="cursor:pointer;">
-              내가 찜한 영화
-            </h2>
-            <div class="col-1" @click="clickLeft" style="cursor:pointer;">
-              <i class="fa fa-chevron-left" aria-hidden="true" style="font-size: 40px;"></i>
-            </div>
-            <div class="carousel col-10">
-              <wish-list-item
-                v-for="wishListId in userProfile.wishlist"
-                :key="wishListId"
-                :wish-list-id="wishListId"
-              >
-              </wish-list-item>
-            </div>
-            <div class="col-1" @click="clickRight" style="cursor:pointer;">
-              <i class="fa fa-chevron-right" aria-hidden="true" style="font-size: 40px;"></i>
-            </div>
+          <div>
+            <img src="../assets/movie_profile.jpg" alt="" class="w-50 mt-5">
           </div>
-          <p>
-            찜한 목록 : {{ userProfile.wishlist }}
-
-            평가 목록 : {{ userProfile.rating_set }}
-          </p>
+          
+          <div>
+            <h2 class="np my-5" style="cursor:pointer;">
+              <strong>📌 내가 찜한 영화</strong>
+            </h2>
+            <wish-list v-if="isNotEmpty"></wish-list>
+            <div v-else>
+              <p style="font-size: 200px" class="np">..텅..</p>
+            </div>
+            <!-- <p>
+              찜한 목록 : {{ userProfile.wishlist }}
+              평가 목록 : {{ userProfile.rating_set }}
+            </p> -->
+          </div>
         </div>
 
       </div>
@@ -92,7 +82,7 @@
 <script>
 import Swal from 'sweetalert2'
 import $ from 'jquery'; 
-import WishListItem from '@/components/movies/WishListItem'
+import WishList from '@/components/movies/WishList'
 import axios from 'axios'
 
 export default {
@@ -101,15 +91,17 @@ export default {
     return {
       scrollAmount: 0,
       scrollPerclick: 200,
-      modalShow: false,
     }
   },
   components: {
-    WishListItem,
+    WishList,
   },
   computed: {
     userProfile() {
       return this.$store.state.userProfile
+    },
+    isNotEmpty() {
+      return this.$store.state.myWishList
     }
   },
   created() {

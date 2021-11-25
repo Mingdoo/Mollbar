@@ -87,6 +87,7 @@ export default {
 </script>
 
 <style>
+
 .container-carousel {
   text-align: center;
   align-items: center;

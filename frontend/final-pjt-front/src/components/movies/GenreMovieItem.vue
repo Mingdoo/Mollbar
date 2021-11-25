@@ -4,7 +4,6 @@
   <div class="carouselbox" @click="movieDetail(movieByGenre)" style="display: inline;">
     <router-link :to="`/movies/${movieByGenre.id}`">
       <img :src="movieUrl" alt="" class="img slider-img">
-      <span class="button heartButton"></span>
     </router-link>
   </div>
 </template>
