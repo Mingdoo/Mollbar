@@ -10,11 +10,11 @@
         <div class="badge"> <span> <b>{{ searchResult.vote_avg }}</b></span> </div>
       </div>
       <div class="mt-5 row">
-        <h6 class="heading text-white np col-12 justify-content-center text-align-center">{{ searchResult.title }}<br>
-        </h6>
         <router-link :to="`/movies/${searchResult.id}`">
           <img :src="movieUrl" alt="" class="w-75 cardimage" @click="movieDetail(searchResult)">
         </router-link>
+        <h5 class="heading text-white np col-12 justify-content-center text-align-center">{{ searchResult.title }}<br>
+        </h5>
       </div>
     </div>
   </div>
@@ -33,7 +33,11 @@ export default {
   },
   computed: {
     movieUrl() {
-      return BASE_URL + this.searchResult.poster_path
+      if (this.searchResult.poster_path) {
+        return BASE_URL + this.searchResult.poster_path
+      } else {
+        return ''
+      }
     },
     // isLiked() {
     //   return this.$store.state.myWishList.includes(this.searchResult.id)
@@ -77,7 +81,6 @@ export default {
           })
           .then(res => {
             const btnId = searchResult.id
-            console.log('asdfasdfd', btnId)
             const likebtn = document.querySelector(`[id=${CSS.escape(btnId)}]`)
             if (likebtn.classList.contains('far')) {
               likebtn.classList.remove('far')
