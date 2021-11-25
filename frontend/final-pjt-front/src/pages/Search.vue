@@ -106,7 +106,7 @@ export default {
           this.$store.dispatch('searchMovie', res.data)
         })
         .then(() => {
-          this.$router.push({name: "Search"})
+          this.$router.push({name: "Search"}).catch(() => {})
         })
         .catch((err) => {
           alert(err)
