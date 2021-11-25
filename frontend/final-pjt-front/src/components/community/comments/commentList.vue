@@ -36,7 +36,7 @@
 <script>
 const API_BASE_URL = 'http://127.0.0.1:8000/api/v1/community/'
 
-
+import Swal from 'sweetalert2'
 import axios from 'axios'
 export default {
   name: "CommentList",
@@ -65,6 +65,22 @@ export default {
         })
           .then(() => {
             this.$store.dispatch('deleteComment', comment.id)
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+
+            Toast.fire({
+              icon: 'success',
+              title: '댓글이 삭제되었습니다.'
+            })
           })
       // console.log(`${API_BASE_URL}${this.selectedArticle.id}/comments/${comment.id}/`)
     },
@@ -94,6 +110,22 @@ export default {
         .then((res) => {
           console.log(res)
           this.$store.dispatch('editComment', res.data)
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+          Toast.fire({
+            icon: 'success',
+            title: '댓글이 수정되었습니다.'
+          })
         })
       const normalcomment = document.querySelector(`#normalcomment${comment.id}`)
       normalcomment.classList.add('commentformvisible')

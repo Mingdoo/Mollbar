@@ -45,6 +45,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 const API_SEARCH_URL = 'http://127.0.0.1:8000/api/v1/movies/search/'
 
 export default {
@@ -60,6 +61,23 @@ export default {
       // this.isLogin = false
       this.$store.dispatch('changeLogged')
       this.$router.push({name: 'Login'})
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+      Toast.fire({
+        icon: 'success',
+        title: '로그아웃 성공!'
+      })
     },
     searchMovie() {
       axios({
@@ -73,6 +91,7 @@ export default {
           this.$store.dispatch('searchMovie', res.data)
         })
         .then(() => {
+          this.userSearchInput = ''
           this.$router.push({name: "Search"})
         })
         .catch((err) => {

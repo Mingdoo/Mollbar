@@ -172,6 +172,7 @@ import KProgress from 'k-progress';
 import StarRating from 'vue-star-rating'
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api/v1/movies/'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'MovieDetail',
@@ -213,6 +214,23 @@ export default {
         .then((res) => {
           this.$store.dispatch('updateMovieRating', res.data) 
           this.reviewComment = ''
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+          Toast.fire({
+            icon: 'success',
+            title: '평가가 등록되었습니다.'
+          })
           console.log(this.$store.state.selectedMovie)
         })
     },
@@ -231,6 +249,23 @@ export default {
         this.reviewComment = '';
 
         this.$store.dispatch('deleteMovieRating', rating.id)
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+        Toast.fire({
+          icon: 'success',
+          title: '평가가 삭제되었습니다.'
+        })
       })
     },
     changeLike(movie) {
