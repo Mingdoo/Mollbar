@@ -41,6 +41,7 @@
 const API_BASE_URL = 'http://127.0.0.1:8000/api/v1/community/'
 
 import axios from 'axios'
+import Swal from 'sweetalert2'
 import CommentList from '@/components/community/comments/commentList'
 
 export default {
@@ -82,6 +83,13 @@ export default {
         })
           .then(() => {
             this.$router.push({name: "CommunityHome"})
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: '게시글이 삭제되었습니다.',
+              showConfirmButton: false,
+              timer: 1500
+            })
           })
       }
     },
@@ -101,6 +109,22 @@ export default {
         .then((res) => {
           this.$store.dispatch('commentCreated', res.data)
           this.userComment = ''
+          const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+
+            Toast.fire({
+              icon: 'success',
+              title: '댓글이 생성되었습니다.'
+            })
         })
       },
     updateArticle(article) {

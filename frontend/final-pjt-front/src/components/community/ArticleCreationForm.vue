@@ -79,7 +79,7 @@ export default {
               Swal.fire({
                 position: 'top',
                 icon: 'success',
-                title: '게시글 수정이 완료되었습니다!',
+                title: '게시글 수정이 완료되었습니다.',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -100,16 +100,14 @@ export default {
             .then(() => {
               // console.log(res)
               this.$router.push({ name: "CommunityHome"})
-              if ( bool ) {
-                Swal.fire({
-                  position: 'top',
-                  icon: 'success',
-                  title: '게시글 생성이 완료되었습니다!',
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-            }
-          })
+              Swal.fire({
+                position: 'top',
+                icon: 'success',
+                title: '게시글 생성이 완료되었습니다.',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            })
         }
       } else {
         Swal.fire({
