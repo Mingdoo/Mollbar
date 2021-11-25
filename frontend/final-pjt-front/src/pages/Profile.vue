@@ -29,8 +29,8 @@
 
                 <b-button id="toggle-btn" class="profile-btn" style="background-color: #DA0037;" @click="toggleModal">회원 탈퇴</b-button>
 
-                <b-modal ref="my-modal" hide-footer title="마지막으로 한번만 붙잡을게요..." class="noto">
-                  <div class="d-block text-center">
+                <b-modal ref="my-modal" hide-footer hide-header title="마지막으로 한번만 붙잡을게요..." class="noto">
+                  <div class="d-block text-center align-center">
                     <p class="mt-3 noto">회원 탈퇴시</p>
                     <p class="mt-3 noto">그동안 남겨주신 글/댓글/평점/찜 목록 등이 모두 삭제됩니다.</p>
                     <p class="mt-3 noto">그래도 탈퇴하시겠습니까? </p>
@@ -47,7 +47,8 @@
               </div>
               <!-- 1-3. tv with mollbar 이미지 -->
               <div>
-                <img src="https://media.vlpt.us/images/ready2start/post/db891b0e-9a28-4b40-9cf8-7fc58fe3e0b9/tv_with_mollbar.png" alt="" id="mollbar-image">
+                <img src="../assets/tv_with_mollbar.png" alt="" id="mollbar-image">
+                <!-- <img src="https://media.vlpt.us/images/ready2start/post/db891b0e-9a28-4b40-9cf8-7fc58fe3e0b9/tv_with_mollbar.png" alt="" id="mollbar-image"> -->
               </div>
             </div>
             

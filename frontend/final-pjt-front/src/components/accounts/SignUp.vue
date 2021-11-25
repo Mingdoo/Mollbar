@@ -25,15 +25,15 @@
                       <div class="card card2 px-4 py-5 border-0">
                         <h4 class="np">아이디 규칙</h4>
                         <p id="idconfirmation" class="invalid mt-3 np"><b>숫자 또는 소문자</b>로만 6자 이상 포함해주세요</p>
-                        <h4 class="np">패스워드 규칙</h4>
+                        <h4 class="np mt-3">패스워드 규칙</h4>
                         <p id="capital" class="invalid mt-3 np"><b>대문자</b>를 포함해주세요</p>
                         <p id="lowercase" class="invalid np"><b>소문자</b>를 포함해주세요</p>
                         <p id="number" class="invalid np"><b>숫자</b>를 포함해주세요</p>
-                        <p id="length" class="invalid mb-4 np"><b>8자</b> 이상을 포함해주세요</p>
+                        <p id="length" class="invalid np"><b>8자</b> 이상을 포함해주세요</p>
                         <p id="passwordconfirmation" class="invalid mb-4 np"><b>동일한</b> 비밀번호를 입력해주세요</p>
                       </div>
                     </div>
-                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-secondary text-center mt-4" :class="{'visible': isPasswordConfirmationValid && isPasswordContainsCapital && isPasswordContainsLower && isPasswordContainsNumber && isPasswordLengthValid }" @click="signUp">회원가입</button> </div>
+                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-secondary text-center mt-4" :class="{'is-valid': isPasswordConfirmationValid && isPasswordContainsCapital && isPasswordContainsLower && isPasswordContainsNumber && isPasswordLengthValid }" @click="signUp">회원가입</button> </div>
                 </div>
             </div>
             
@@ -206,10 +206,10 @@ input {
   /* color: white; */
 }
 
-.visible {
-  background-color:deepskyblue !important;
+.is-valid {
+  background-color: #0F52BA !important;
+  border: none !important;
 }
-
 
 /* The message box is shown when the user clicks on the password field */
 #message {

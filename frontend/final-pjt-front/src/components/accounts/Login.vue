@@ -4,7 +4,7 @@
       <div class="row d-flex justify-content-center">
         <div class="mt-5 col-4">
           <div class="card2 card border-0 px-4 py-5">
-          <h1 class="np">로그인</h1>
+          <h1 class="np mb-4">로그인</h1>
             <div class="row px-3"> 
               <label class="mb-1">
                 <h6 class="mb-0 text-sm">아이디</h6>
@@ -126,17 +126,16 @@ export default {
   updated() {
     const btn = document.querySelector('#loginButton')
     if (this.credentials.username && this.credentials.password) {
-      btn.classList.add('blueButton')
+      btn.classList.remove('btn-secondary')
+      btn.classList.add('btn-primary')
     } else {
-      btn.classList.remove('blueButton')
+      btn.classList.add('btn-secondary')
+      btn.classList.remove('btn-primary')
     }
   }
 }
 </script>
 
 <style>
-.blueButton {
-  background-color: lightskyblue !important;
-}
 
 </style>

@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="mt-5 col-6">
           <div class="card border-0 px-4 py-5">
-            <h1 class="">💡 제목 : {{ selectedArticle.article_title }}</h1>
+            <h1 class="">💡 {{ selectedArticle.article_title }}</h1>
             <hr>
             <div class="container">
               <h6 style="height: 100%;" class="text-start">{{ selectedArticle.article_content }}</h6>
@@ -23,7 +23,7 @@
                   <input type="text" name="" id="" v-if="isLogin" v-model="userComment">
                 </div>
                 <div class="col-2">
-                  <button class="btn btn-primary w-100 py-3 h-100" @click="commentSubmit" v-if="isLogin">댓글 생성</button>
+                  <button class="btn btn-primary w-100 h-100" @click="commentSubmit" v-if="isLogin">댓글 생성</button>
                 </div>
               </div> 
               <hr>

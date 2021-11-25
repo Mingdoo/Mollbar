@@ -56,24 +56,26 @@ export default {
   },
   methods: {
     submitArticle(bool) {
+      // console.log(this.$route.params.article)
       // console.log(this.article_content)
       // console.log(this.article_title)
-      if (this.article_title && this.article_content){
-        axios({
-          method: 'post',
-          url: API_CREATION_URL,
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          data: {
-            article_title: this.article_title,
-            article_content: this.article_content
-          }
-        })
-          .then(() => {
-            // console.log(res)
-            this.$router.push({ name: "CommunityHome"})
-            if ( bool ) {
+      if (this.article_title && this.article_content) {
+        // 게시글 UPDATE
+        if ( bool ) {
+          axios({
+            // put으로 바꿔야함!
+            method: 'put',
+            url: API_CREATION_URL + this.$route.params.article.id + '/',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            data: {
+              article_title: this.article_title,
+              article_content: this.article_content
+            }
+          })
+            .then(() => {
+              this.$router.push({ name: "CommunityHome"})
               Swal.fire({
                 position: 'top',
                 icon: 'success',
@@ -81,16 +83,34 @@ export default {
                 showConfirmButton: false,
                 timer: 1500
               })
-            } else {
-              Swal.fire({
-                position: 'top',
-                icon: 'success',
-                title: '게시글 생성이 완료되었습니다!',
-                showConfirmButton: false,
-                timer: 1500
-              })
+            })
+        // 게시글 CREATE
+        } else {
+          axios({
+            method: 'post',
+            url: API_CREATION_URL,
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            data: {
+              article_title: this.article_title,
+              article_content: this.article_content
             }
-          })  
+          })
+            .then(() => {
+              // console.log(res)
+              this.$router.push({ name: "CommunityHome"})
+              if ( bool ) {
+                Swal.fire({
+                  position: 'top',
+                  icon: 'success',
+                  title: '게시글 생성이 완료되었습니다!',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+            }
+          })
+        }
       } else {
         Swal.fire({
           position: 'top',
@@ -101,31 +121,8 @@ export default {
         })
       }
     },
-    updateArticle() {
-      console.log(this.$route)
-      // console.log(this.article_content)
-      // console.log(this.article_title)
-      if (this.article_title && this.article_content){
-        axios({
-          method: 'put',
-          url: API_CREATION_URL + this.$route.params.article.id + '/',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          data: {
-            article_title: this.article_title,
-            article_content: this.article_content
-          }
-        })
-          .then(() => {
-            // console.log(res)
-            this.$router.push({ name: "CommunityHome"})
-          })  
-      } else {
-        alert('title과 content를 1자이상 입력하세요')
-      }
-  }},
-  //mounted를 사용해서 update정보를 끌어옴
+  },
+  // mounted를 사용해서 update 정보를 끌어옴
   mounted() {
     if (this.$route.params.article) {
       this.article_title = this.$route.params.article.article_title
