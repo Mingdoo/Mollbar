@@ -23,7 +23,7 @@
             style="max-width: 20rem;" 
         >
             <h5>{{score * 10}} / {{questions.length * 10}}</h5>
-            <p>몰바와 함께 한국영화를 더 알아가요.</p>
+            <p>몰봐와 함께 한국영화를 더 알아가요.</p>
         </b-card>
     </div>
     <div class="card-q" v-else>

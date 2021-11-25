@@ -6,8 +6,10 @@
           <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img alt="Vue logo" src="../assets/logo_transparent.png" class="img-fluid rounded-3 my-5"></div>
           <div class="col-lg-8 col-xl-7 col-xxl-6">
             <div class="my-5 text-center text-xl-start">
-              <h1 class="display-5 fw-bolder text-white mb-2 hometitle">우리.. 영화볼래요?</h1>
-              <p class="lead fw-normal text-white-50 mb-4">영화는 많고 뭘 봐야할지 모르겠다면, <b class="h4">몰봐</b>로 오세요! 재미있고 즐거운 영화 정보가 가득! 장르별 영화, 검색은 기본! 재미는 2배 기쁨은 5배!</p>
+              <h1 class="display-5 fw-bolder text-white mb-2 hometitle">우리.. 영화 볼래요?</h1>
+              <p class="lead fw-normal text-white-50 mb-4">영화는 많고 뭘 봐야 할지 모르겠다면, <b>몰봐</b>
+              <!-- 로 오세요! 재미있고 즐거운 영화 정보가 가득! 장르별 영화, 검색은 기본! 재미는 2배 기쁨은 5배! -->
+              </p>
               <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
               </div>
             </div>
