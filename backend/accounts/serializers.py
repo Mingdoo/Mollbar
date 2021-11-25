@@ -20,7 +20,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'wishlist', 'date_joined', 'rating_set', 'days_since_joined')
     
     def get_days_since_joined(self, obj):
-        return (now() - obj.date_joined).days
+        return (now() - obj.date_joined).days + 1
 
 
 

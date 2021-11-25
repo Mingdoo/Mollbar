@@ -108,13 +108,13 @@
           :glow="3"
           :clearable=true
           :show-rating="false"
-          :star-size="30"
+          :star-size="40"
           @rating-selected="setRating"
           v-model="starRating"  
         >
         </star-rating>
         <!-- <input type="number" name="" id="userRating" :starRating="starRating" min="1" max="10" required> -->
-        <input type="text" class="col-5 offset-2" id="userReview" v-model="reviewComment" @keyup.enter="updateMovieRating(selectMovie)">
+        <input type="text" class="col-7" id="userReview" v-model="reviewComment" @keyup.enter="updateMovieRating(selectMovie)">
         <button 
           class="btn btn-outline-success col-1 offset-1 white"
           style="font-size: 18px;"

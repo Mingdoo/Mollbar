@@ -1,11 +1,29 @@
 <template>
   <div class="d-flex justify-content-center" id="cardBox">
-    <div v-if="showScore">
+    <!-- <div v-if="showScore">
         <b-card
         title="Results"
         style="max-width: 20rem;"
         >
         You Scored {{score}} of {{questions.length}}
+        </b-card>
+    </div> -->
+    <div v-if="showScore">
+        <b-card
+            v-if="scoreHigh"
+            title="점수"
+            style="max-width: 20rem;"  
+        >
+            <h5>{{score * 10}} / {{questions.length * 10}}</h5>
+            <p>영잘알이시군요!</p>
+        </b-card>
+        <b-card
+            v-else
+            title="점수"
+            style="max-width: 20rem;" 
+        >
+            <h5>{{score * 10}} / {{questions.length * 10}}</h5>
+            <p>몰바와 함께 한국영화를 더 알아가요.</p>
         </b-card>
     </div>
     <div class="card-q" v-else>
@@ -88,6 +106,7 @@ export default {
             countDown : 15,
             timer:null,
             startQuiz: false,
+            scoreHigh: false,
 
             questions : [],
         }
@@ -111,6 +130,9 @@ export default {
             this.countDownTimer();
             }
             else {
+                if (this.score > 7) {
+                  this.scoreHigh = true;
+                }
                 this.showScore = true;
             }
         },
@@ -145,6 +167,17 @@ export default {
 </script>
 
 <style scoped>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+p, h5 {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+h5 {
+  color: tomato;
+  margin-top: 20px;
+}
+
 .card {
     min-width: 100%;
     border-radius: 15px;
