@@ -56,12 +56,17 @@
       name="fade"
       mode="out-in"
       class="row"
+      :key="1"
+      v-if="searchResults"
       >
       <search-list v-for="searchResult in searchResults" :key="searchResult.id" :search-result="searchResult"></search-list>
       <div v-if="!searchResults">
         <p class="np font-white" style="font-size: 500px">..텅..</p>
       </div>
       </transition-group>
+      <div v-else>
+        <p style="font-size: 500px" class="np">..텅..</p>
+      </div>
     </div>
   </div>
 </template>
@@ -106,12 +111,15 @@ export default {
           this.$store.dispatch('searchMovie', res.data)
         })
         .then(() => {
-          this.$router.push({name: "Search"}).catch(() => {})
+          this.$router.push({name: "Search", params: {query: this.searchName}}).catch(() => {})
         })
         .catch((err) => {
           alert(err)
         })
     }
+  },
+  created() {
+    console.log(this.$route.params.query)
   }
 }
 </script>

@@ -63,7 +63,10 @@
             <h2 class="np my-5" style="cursor:pointer;">
               <strong>📌 내가 찜한 영화</strong>
             </h2>
-            <wish-list></wish-list>
+            <wish-list v-if="isNotEmpty"></wish-list>
+            <div v-else>
+              <p style="font-size: 200px" class="np">..텅..</p>
+            </div>
             <!-- <p>
               찜한 목록 : {{ userProfile.wishlist }}
               평가 목록 : {{ userProfile.rating_set }}
@@ -96,6 +99,9 @@ export default {
   computed: {
     userProfile() {
       return this.$store.state.userProfile
+    },
+    isNotEmpty() {
+      return this.$store.state.myWishList
     }
   },
   created() {
