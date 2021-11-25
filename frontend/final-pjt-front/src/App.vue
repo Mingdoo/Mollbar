@@ -9,7 +9,7 @@
     >
       <router-view :key="$route.fullPath"></router-view>
     </transition>
-    <foo-ter></foo-ter>
+    <foo-ter id="footer"></foo-ter>
   </div>
 </template>
 
@@ -27,8 +27,10 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -59,5 +61,11 @@ export default {
 .fade-enter,
 .fade-leave-active {
   opacity: 0
+}
+
+#footer {
+  background-color: #EDEDED;
+  margin: 0;
+  padding: 0;
 }
 </style>
