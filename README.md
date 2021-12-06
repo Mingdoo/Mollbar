@@ -98,11 +98,11 @@
 
 |no|title|link|
 | :--: | :-----------: | :--: |
-|1|TMDB API로 영화 데이터 가져오기|[LINK](https://velog.io/@ready2start/Mollbar-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-%EC%98%81%ED%99%94-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0)|
-|2|prefetch_related를 통한 성능 개선|[LINK](https://velog.io/@ready2start/Mollbar-02-prefetchrelated%EB%A5%BC-%ED%86%B5%ED%95%9C-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0)|
-|3|영화 평점 시스템 구현하기|[LINK](https://velog.io/@ready2start/Mollbar-%EC%98%81%ED%99%94-%ED%8F%89%EC%A0%90-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)|
-|4|비밀번호 변경 with JWT|[LINK](https://velog.io/@ready2start/Mollbar-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EB%B3%80%EA%B2%BD-with-JWT)|
-|5|sqlite3에 리스트 필드 추가하기|[LINK](https://velog.io/@ready2start/Mollbar-sqlite3%EC%97%90-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%95%84%EB%93%9C-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0)|
+|1|TMDB API로 영화 데이터 가져오기|[LINK](https://github.com/by-gramm/TIL/blob/master/projects/mollbar/01%20TMDB%20API%EB%A1%9C%20%EC%98%81%ED%99%94%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0.md)|
+|2|prefetch_related를 통한 성능 개선|[LINK](https://github.com/by-gramm/TIL/blob/master/projects/mollbar/02%20prefetch_related%EB%A5%BC%20%ED%86%B5%ED%95%9C%20%EC%84%B1%EB%8A%A5%20%EA%B0%9C%EC%84%A0.md)|
+|3|영화 평점 시스템 구현하기|[LINK](https://github.com/by-gramm/TIL/blob/master/projects/mollbar/03%20%EC%98%81%ED%99%94%20%ED%8F%89%EC%A0%90%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.md)|
+|4|JWT로 비밀번호 변경하기|[LINK](https://github.com/by-gramm/TIL/blob/master/projects/mollbar/04%20JWT%EB%A1%9C%20%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0.md)|
+|5|sqlite3에 리스트 필드 추가하기|[LINK](https://github.com/by-gramm/TIL/blob/master/projects/mollbar/05%20sqlite3%EC%97%90%20%EB%A6%AC%EC%8A%A4%ED%8A%B8%20%ED%95%84%EB%93%9C%20%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0.md)|
 
 <br>
 
